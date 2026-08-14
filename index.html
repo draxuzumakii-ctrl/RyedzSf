@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RYEDZ · Music Player</title>
+  <title>RYEDZ · JAILBREAK · AI PROMPT SOCIAL</title>
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
@@ -19,37 +19,970 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
   <style>
-    /* ===== RESET ===== */
+    /* ================================================================
+       JAILBREAK AI SOCIAL THEME
+       ================================================================ */
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;600&display=swap');
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     :root {
-      --glass-bg: rgba(255, 255, 255, 0.07);
-      --glass-border: rgba(255, 255, 255, 0.12);
-      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      --glass-radius: 20px;
-      --text-primary: #f0eaff;
-      --text-secondary: rgba(240, 234, 255, 0.7);
-      --accent: #a78bfa;
-      --accent-glow: rgba(167, 139, 250, 0.3);
-      --bg-dark: #0b0818;
-      --splash-bg: #0b0818;
-      --splash-title: #f0eaff;
-      --splash-sub: rgba(240, 234, 255, 0.7);
-      --splash-accent: #a78bfa;
-      --splash-duration: 5s;
+      --glass-bg: rgba(0, 255, 200, 0.04);
+      --glass-border: rgba(0, 255, 200, 0.08);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 255, 200, 0.03);
+      --glass-radius: 16px;
+      --text-primary: #00ffc8;
+      --text-secondary: rgba(0, 255, 200, 0.5);
+      --text-muted: rgba(0, 255, 200, 0.2);
+      --accent: #00ffc8;
+      --accent-glow: rgba(0, 255, 200, 0.1);
+      --accent-glow-strong: rgba(0, 255, 200, 0.25);
+      --bg-dark: #0a0a0f;
+      --font-display: 'Orbitron', monospace;
+      --font-body: 'Inter', sans-serif;
+      --font-code: 'Fira Code', monospace;
+      --gold: #ffd700;
+      --silver: #c0c0c0;
+      --bronze: #cd7f32;
     }
+
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: var(--font-body);
       background: var(--bg-dark);
       color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* ===== SPLASH SCREEN ===== */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 200, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 200, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(0, 255, 200, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(0, 255, 200, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--glass-radius);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .glass-card {
+      background: rgba(0, 255, 200, 0.02);
+      backdrop-filter: blur(12px) saturate(1.1);
+      -webkit-backdrop-filter: blur(12px) saturate(1.1);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      border-radius: var(--glass-radius);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(0, 255, 200, 0.1);
+    }
+
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* ================================================================
+       AUTH
+       ================================================================ */
+    #authPage {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-dark);
+    }
+    #authPage .auth-box {
+      width: 420px;
+      max-width: 92vw;
+      padding: 48px 36px;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      background: rgba(0, 255, 200, 0.02);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+    }
+    #authPage .auth-box .auth-icon {
+      font-size: 48px;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-shadow: 0 0 40px var(--accent-glow);
+    }
+    #authPage .auth-box h1 {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: var(--font-display);
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--accent), #00cc99);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #authPage .auth-box .sub {
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 300;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+    }
+    #authPage .auth-box input {
+      width: 100%;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      background: rgba(0, 255, 200, 0.03);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: 0.3s;
+    }
+    #authPage .auth-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    #authPage .auth-box input::placeholder {
+      color: rgba(0, 255, 200, 0.15);
+    }
+    #authPage .auth-box .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #00cc99, var(--accent));
+      border: none;
+      border-radius: 10px;
+      color: #0a0a0f;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: var(--font-display);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    #authPage .auth-box .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px var(--accent-glow-strong);
+    }
+    #authPage .auth-box .toggle-auth {
+      margin-top: 18px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 300;
+    }
+    #authPage .auth-box .toggle-auth span {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    #authPage .auth-box .toggle-auth span:hover {
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+    .auth-error {
+      color: #ff4466;
+      font-size: 13px;
+      margin-top: -6px;
+      margin-bottom: 12px;
+      display: none;
+      text-shadow: 0 0 20px rgba(255, 68, 102, 0.2);
+    }
+
+    /* ================================================================
+       MAIN APP
+       ================================================================ */
+    #app {
+      display: none;
+      position: relative;
+      z-index: 1;
+      padding: 20px 24px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: rgba(0, 255, 200, 0.02);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 255, 200, 0.03);
+      border-radius: 12px;
+    }
+    .app-header .logo {
+      font-size: 20px;
+      font-weight: 900;
+      font-family: var(--font-display);
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--accent), #00cc99);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .app-header .logo i {
+      -webkit-text-fill-color: initial;
+      color: var(--accent);
+      margin-right: 8px;
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+    .app-header .user-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      flex-wrap: wrap;
+    }
+    .app-header .user-info .badge {
+      background: rgba(0, 255, 200, 0.08);
+      color: var(--accent);
+      padding: 2px 14px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid rgba(0, 255, 200, 0.04);
+    }
+    .app-header .user-info .badge.badge-verified {
+      background: rgba(0, 100, 255, 0.15);
+      color: #4488ff;
+      border-color: rgba(0, 100, 255, 0.15);
+    }
+    .app-header .user-info .logout-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(0, 255, 200, 0.03);
+      color: var(--text-secondary);
+      padding: 6px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.3s;
+    }
+    .app-header .user-info .logout-btn:hover {
+      background: rgba(255, 68, 102, 0.05);
+      border-color: rgba(255, 68, 102, 0.08);
+      color: #ff4466;
+    }
+    .app-header .user-info .user-badges {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .app-header .user-info .user-badges .tier-badge {
+      font-size: 14px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .tier-a {
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    .tier-b {
+      color: var(--silver);
+      text-shadow: 0 0 20px rgba(192, 192, 192, 0.2);
+    }
+    .tier-c {
+      color: var(--bronze);
+      text-shadow: 0 0 20px rgba(205, 127, 50, 0.2);
+    }
+    .glow-text {
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,
+      100% {
+        text-shadow: 0 0 10px var(--accent);
+      }
+      50% {
+        text-shadow: 0 0 30px var(--accent), 0 0 60px var(--accent);
+      }
+    }
+    .verified-badge {
+      color: #4488ff;
+      font-size: 14px;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+
+    /* TAB NAV */
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      background: rgba(0, 255, 200, 0.02);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 200, 0.02);
+    }
+    .tab-nav button {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: var(--font-body);
+    }
+    .tab-nav button:hover {
+      color: var(--text-primary);
+      background: rgba(0, 255, 200, 0.02);
+    }
+    .tab-nav button.active {
+      background: rgba(0, 255, 200, 0.04);
+      color: var(--text-primary);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+    }
+    .tab-nav button i {
+      margin-right: 6px;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeUp 0.4s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ================================================================
+       PROMPT LIBRARY
+       ================================================================ */
+    .prompt-library {
+      padding: 0;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .search-bar input {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px 20px;
+      background: rgba(0, 255, 200, 0.03);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: 0.3s;
+      font-family: var(--font-body);
+    }
+    .search-bar input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-bar input::placeholder {
+      color: rgba(0, 255, 200, 0.15);
+    }
+
+    .prompt-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .prompt-filters button {
+      padding: 8px 20px;
+      background: rgba(0, 255, 200, 0.02);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      border-radius: 20px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: var(--font-body);
+      font-weight: 500;
+    }
+    .prompt-filters button:hover {
+      border-color: rgba(0, 255, 200, 0.08);
+      color: var(--text-primary);
+    }
+    .prompt-filters button.active {
+      background: rgba(0, 255, 200, 0.06);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+    }
+
+    .prompt-card {
+      padding: 20px;
+      background: rgba(0, 255, 200, 0.02);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      border-radius: 14px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .prompt-card:hover {
+      border-color: rgba(0, 255, 200, 0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    .prompt-card .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .prompt-card .header .title {
+      font-weight: 600;
+      font-size: 15px;
+      font-family: var(--font-body);
+    }
+    .prompt-card .header .badge-ai {
+      padding: 2px 12px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--font-display);
+      background: rgba(0, 255, 200, 0.04);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .prompt-card .header .badge-ai.deepseek {
+      border-color: rgba(0, 100, 255, 0.2);
+      color: #4488ff;
+    }
+    .prompt-card .header .badge-ai.gpt {
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #aaa;
+    }
+    .prompt-card .header .badge-ai.gemini {
+      border-color: rgba(255, 200, 0, 0.2);
+      color: #ffcc44;
+    }
+    .prompt-card .header .badge-ai.claude {
+      border-color: rgba(200, 150, 255, 0.2);
+      color: #bb88ff;
+    }
+    .prompt-card .header .badge-ai.llama {
+      border-color: rgba(255, 100, 100, 0.2);
+      color: #ff6644;
+    }
+
+    .prompt-card .prompt-preview {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.5;
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-family: var(--font-code);
+      font-size: 12px;
+    }
+
+    .prompt-card .meta {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 300;
+      flex-wrap: wrap;
+    }
+    .prompt-card .meta span i {
+      margin-right: 4px;
+    }
+    .prompt-card .meta .username {
+      color: var(--text-secondary);
+    }
+    .prompt-card .meta .rating {
+      color: var(--gold);
+    }
+    .prompt-card .meta .rating .stars {
+      letter-spacing: 1px;
+    }
+
+    /* ================================================================
+       USER PROFILE BADGE
+       ================================================================ */
+    .user-uploader {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .user-uploader .tier-icon {
+      font-size: 12px;
+    }
+    .user-uploader .tier-icon.tier-a {
+      color: var(--gold);
+    }
+    .user-uploader .tier-icon.tier-b {
+      color: var(--silver);
+    }
+    .user-uploader .tier-icon.tier-c {
+      color: var(--bronze);
+    }
+    .user-uploader .verified-icon {
+      color: #4488ff;
+      font-size: 10px;
+    }
+    .user-uploader .glow-name {
+      animation: glowPulse 2s ease-in-out infinite;
+      font-weight: 600;
+    }
+
+    /* ================================================================
+       RATING STARS
+       ================================================================ */
+    .rating-stars {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+    .rating-stars .star {
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 14px;
+    }
+    .rating-stars .star.active {
+      color: var(--gold);
+    }
+    .rating-stars .star:hover {
+      transform: scale(1.2);
+    }
+    .rating-stars .star-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+
+    /* ================================================================
+       PROMPT DETAIL MODAL
+       ================================================================ */
+    .prompt-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+    }
+    .prompt-modal.show {
+      display: flex;
+    }
+    .prompt-modal .modal-content {
+      width: 90%;
+      max-width: 800px;
+      max-height: 85vh;
+      padding: 32px 36px;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      border-radius: 16px;
+      overflow-y: auto;
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.6);
+    }
+    .prompt-modal .modal-content .close-modal {
+      float: right;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 24px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .prompt-modal .modal-content .close-modal:hover {
+      color: var(--text-primary);
+    }
+    .prompt-modal .modal-content .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      font-family: var(--font-display);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .prompt-modal .modal-content .modal-ai {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+    .prompt-modal .modal-content .modal-uploader {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+    .prompt-modal .modal-content .modal-description {
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    .prompt-modal .modal-content .modal-prompt {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: var(--font-code);
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--text-primary);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .prompt-modal .modal-content .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .prompt-modal .modal-content .modal-actions button {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: var(--font-body);
+    }
+    .prompt-modal .modal-content .copy-btn {
+      background: linear-gradient(135deg, #00cc99, var(--accent));
+      color: #0a0a0f;
+    }
+    .prompt-modal .modal-content .copy-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px var(--accent-glow-strong);
+    }
+    .prompt-modal .modal-content .modal-rating {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ================================================================
+       ADMIN PANEL
+       ================================================================ */
+    .admin-section {
+      padding: 24px 28px;
+      margin-bottom: 28px;
+      background: rgba(0, 255, 200, 0.02);
+      border: 1px solid rgba(0, 255, 200, 0.03);
+      border-radius: 14px;
+      backdrop-filter: blur(12px);
+    }
+    .admin-section h3 {
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font-display);
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .admin-section h3 i {
+      margin-right: 8px;
+      color: var(--accent);
+    }
+    .admin-section .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .admin-section .row input,
+    .admin-section .form-group input,
+    .admin-section .form-group select,
+    .admin-section .form-group textarea {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px 18px;
+      background: rgba(0, 255, 200, 0.03);
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: 0.3s;
+      font-family: var(--font-body);
+    }
+    .admin-section .row input:focus,
+    .admin-section .form-group input:focus,
+    .admin-section .form-group select:focus,
+    .admin-section .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .admin-section .row input::placeholder,
+    .admin-section .form-group textarea::placeholder {
+      color: rgba(0, 255, 200, 0.15);
+    }
+    .admin-section .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+      font-family: var(--font-code);
+      font-size: 13px;
+    }
+    .admin-section .row .btn,
+    .admin-section .btn-save {
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #00cc99, var(--accent));
+      border: none;
+      border-radius: 10px;
+      color: #0a0a0f;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 13px;
+      font-family: var(--font-display);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .admin-section .row .btn:hover,
+    .admin-section .btn-save:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px var(--accent-glow-strong);
+    }
+    .admin-section .row .btn:disabled,
+    .admin-section .btn-save:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    .admin-section .status {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+    .admin-section .status.success {
+      color: var(--accent);
+    }
+    .admin-section .status.error {
+      color: #ff4466;
+    }
+    .admin-section .form-group {
+      margin-bottom: 12px;
+    }
+    .admin-section .form-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .admin-section .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Admin user list */
+    .admin-user-list .user-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.02);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .admin-user-list .user-item .info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+      min-width: 200px;
+    }
+    .admin-user-list .user-item .info .text .t {
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .admin-user-list .user-item .info .text .a {
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 300;
+    }
+    .admin-user-list .user-item .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .admin-user-list .user-item .actions button {
+      padding: 4px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 255, 200, 0.04);
+      background: rgba(0, 255, 200, 0.02);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 11px;
+      transition: 0.3s;
+      font-family: var(--font-body);
+    }
+    .admin-user-list .user-item .actions button:hover {
+      border-color: rgba(0, 255, 200, 0.08);
+      color: var(--text-primary);
+    }
+    .admin-user-list .user-item .actions button.active {
+      background: rgba(0, 255, 200, 0.06);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .admin-prompt-list .prompt-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.02);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .admin-prompt-list .prompt-item .info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+      min-width: 200px;
+    }
+    .admin-prompt-list .prompt-item .info .text .t {
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .admin-prompt-list .prompt-item .info .text .a {
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 300;
+    }
+    .admin-prompt-list .prompt-item .del-btn {
+      background: rgba(255, 68, 102, 0.02);
+      border: 1px solid rgba(255, 68, 102, 0.04);
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.3s;
+    }
+    .admin-prompt-list .prompt-item .del-btn:hover {
+      background: rgba(255, 68, 102, 0.04);
+      color: #ff4466;
+      border-color: rgba(255, 68, 102, 0.08);
+    }
+
+    .admin-activity-list .activity-item {
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.02);
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+    .admin-activity-list .activity-item .time {
+      color: var(--text-muted);
+      font-size: 11px;
+      margin-left: 8px;
+    }
+    .admin-activity-list .activity-item .user {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .admin-activity-list .activity-item .action {
+      color: var(--accent);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+    }
+    .empty-state i {
+      font-size: 40px;
+      opacity: 0.1;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .empty-state h3 {
+      font-size: 16px;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+      font-weight: 600;
+    }
+    .empty-state p {
+      font-weight: 300;
+      font-size: 13px;
+    }
+
+    /* ================================================================
+       SPLASH
+       ================================================================ */
     #splashScreen {
       position: fixed;
       inset: 0;
@@ -58,14 +991,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: var(--splash-bg);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      background: #0a0a0f;
+      transition: opacity 0.6s ease, transform 0.6s ease;
       overflow: hidden;
       padding: 24px;
     }
     #splashScreen.hide {
       opacity: 0;
-      transform: scale(1.02);
+      transform: scale(1.05);
       pointer-events: none;
     }
     #splashScreen .splash-bg-image {
@@ -73,10 +1006,9 @@
       inset: 0;
       background-size: cover;
       background-position: center;
-      opacity: 0.35;
+      opacity: 0.15;
       z-index: 0;
-      filter: blur(2px);
-      transition: background-image 0.6s ease;
+      filter: blur(4px) grayscale(0.8);
     }
     #splashScreen .splash-video-bg {
       position: absolute;
@@ -85,13 +1017,13 @@
       height: 100%;
       object-fit: cover;
       z-index: 0;
-      opacity: 0.4;
-      filter: blur(1px);
+      opacity: 0.15;
+      filter: blur(3px) grayscale(0.5);
     }
-    #splashScreen .splash-overlay-glow {
+    #splashScreen .splash-overlay {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 40%, rgba(167, 139, 250, 0.15) 0%, transparent 70%);
+      background: radial-gradient(ellipse at 50% 40%, rgba(0, 255, 200, 0.06) 0%, transparent 70%);
       z-index: 1;
       pointer-events: none;
     }
@@ -99,60 +1031,67 @@
       position: relative;
       z-index: 2;
       text-align: center;
-      animation: splashPulse 2s ease-in-out infinite alternate;
-    }
-    @keyframes splashPulse {
-      0% {
-        transform: scale(1);
-      }
-      100% {
-        transform: scale(1.02);
-      }
     }
     #splashScreen .splash-logo {
       font-size: 72px;
-      color: var(--splash-accent);
-      margin-bottom: 12px;
-      animation: splashFloat 3s ease-in-out infinite;
+      color: var(--accent);
+      margin-bottom: 8px;
+      animation: splashGlitch 3s ease-in-out infinite;
       display: inline-block;
-      filter: drop-shadow(0 0 40px var(--splash-accent));
+      text-shadow: 0 0 60px var(--accent);
     }
-    @keyframes splashFloat {
+    @keyframes splashGlitch {
       0%,
       100% {
-        transform: translateY(0px);
+        transform: translate(0) scale(1);
+        opacity: 1;
       }
-      50% {
-        transform: translateY(-12px);
+      2% {
+        transform: translate(-2px, 1px) scale(1.02);
+        opacity: 0.9;
+      }
+      4% {
+        transform: translate(2px, -1px) scale(0.98);
+        opacity: 1;
+      }
+      6% {
+        transform: translate(-1px, 2px) scale(1.01);
+        opacity: 0.95;
+      }
+      8% {
+        transform: translate(0) scale(1);
+        opacity: 1;
       }
     }
     #splashScreen .splash-title {
-      font-size: 42px;
-      font-weight: 800;
-      color: var(--splash-title);
-      letter-spacing: -1px;
-      margin-bottom: 4px;
-      text-shadow: 0 0 60px rgba(167, 139, 250, 0.2);
+      font-size: 40px;
+      font-weight: 900;
+      font-family: var(--font-display);
+      color: var(--text-primary);
+      letter-spacing: 6px;
+      text-shadow: 0 0 60px rgba(0, 255, 200, 0.1);
     }
     #splashScreen .splash-title span {
-      background: linear-gradient(135deg, var(--splash-accent), #c4b5fd);
+      background: linear-gradient(135deg, var(--accent), #00cc99);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     #splashScreen .splash-sub {
-      font-size: 16px;
-      color: var(--splash-sub);
-      font-weight: 400;
-      letter-spacing: 2px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      letter-spacing: 4px;
       margin-top: 4px;
-      opacity: 0.8;
+      opacity: 0.6;
+      text-transform: uppercase;
+      font-family: var(--font-display);
     }
     #splashScreen .splash-progress {
-      margin-top: 36px;
-      width: 160px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 4px;
+      margin-top: 28px;
+      width: 180px;
+      height: 2px;
+      background: rgba(0, 255, 200, 0.04);
+      border-radius: 2px;
       overflow: hidden;
       position: relative;
       z-index: 2;
@@ -160,9 +1099,10 @@
     #splashScreen .splash-progress .bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--splash-accent), #c4b5fd);
-      border-radius: 4px;
-      animation: splashProgress var(--splash-duration) linear forwards;
+      background: linear-gradient(90deg, var(--accent), #00cc99);
+      border-radius: 2px;
+      animation: splashProgress 5s linear forwards;
+      box-shadow: 0 0 20px rgba(0, 255, 200, 0.1);
     }
     @keyframes splashProgress {
       0% {
@@ -174,1025 +1114,31 @@
     }
     #splashScreen .splash-timer-text {
       margin-top: 10px;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.25);
+      font-size: 10px;
+      color: rgba(0, 255, 200, 0.1);
       font-weight: 300;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       z-index: 2;
       position: relative;
-    }
-    #splashScreen .splash-particles {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: var(--splash-accent);
-      border-radius: 50%;
-      opacity: 0.3;
-      animation: particleFloat linear infinite;
-    }
-    @keyframes particleFloat {
-      0% {
-        transform: translateY(100vh) rotate(0deg) scale(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.4;
-      }
-      90% {
-        opacity: 0.4;
-      }
-      100% {
-        transform: translateY(-20vh) rotate(720deg) scale(1);
-        opacity: 0;
-      }
+      font-family: var(--font-display);
     }
 
-    /* ===== GLASS ===== */
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px) saturate(1.4);
-      -webkit-backdrop-filter: blur(24px) saturate(1.4);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--glass-radius);
-      box-shadow: var(--glass-shadow);
-    }
-    ::-webkit-scrollbar {
-      width: 4px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 8px;
-    }
-
-    /* ===== AUTH ===== */
-    #authPage {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-dark);
-    }
-    #authPage .auth-box {
-      width: 400px;
-      max-width: 92vw;
-      padding: 40px 32px;
-      text-align: center;
-    }
-    #authPage .auth-box h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      background: linear-gradient(135deg, #c4b5fd, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    #authPage .auth-box .sub {
-      color: var(--text-secondary);
-      font-size: 14px;
-      margin-bottom: 28px;
-    }
-    #authPage .auth-box input {
-      width: 100%;
-      padding: 14px 18px;
-      margin-bottom: 14px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-      transition: 0.3s;
-    }
-    #authPage .auth-box input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-    #authPage .auth-box input::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-    #authPage .auth-box .btn-primary {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #8b7bf7, #a78bfa);
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.3s;
-      margin-top: 4px;
-    }
-    #authPage .auth-box .btn-primary:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 30px var(--accent-glow);
-    }
-    #authPage .auth-box .toggle-auth {
-      margin-top: 18px;
-      color: var(--text-secondary);
-      font-size: 13px;
-    }
-    #authPage .auth-box .toggle-auth span {
+    .badge-admin {
+      background: rgba(0, 255, 200, 0.08);
       color: var(--accent);
-      cursor: pointer;
-      font-weight: 600;
     }
-    #authPage .auth-box .toggle-auth span:hover {
-      text-decoration: underline;
-    }
-    .auth-error {
-      color: #f87171;
-      font-size: 13px;
-      margin-top: -6px;
-      margin-bottom: 12px;
-      display: none;
-    }
-
-    /* ===== MAIN APP ===== */
-    #app {
-      display: none;
-      position: relative;
-      z-index: 1;
-      padding: 20px 24px 120px;
-      max-width: 1400px;
-      margin: 0 auto;
-      min-height: 100vh;
-    }
-
-    /* ===== HEADER ===== */
-    .app-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 24px;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .app-header .logo {
-      font-size: 22px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #c4b5fd, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
-    }
-    .app-header .logo i {
-      -webkit-text-fill-color: initial;
-      color: var(--accent);
-      margin-right: 6px;
-    }
-    .app-header .user-info {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-    .app-header .user-info .badge {
-      background: var(--accent);
-      color: #fff;
-      padding: 2px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .app-header .user-info .logout-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--text-secondary);
-      padding: 6px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: 0.3s;
-    }
-    .app-header .user-info .logout-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
-      color: #fff;
-    }
-
-    /* ===== TAB NAV ===== */
-    .tab-nav {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
+    .badge-user {
       background: rgba(255, 255, 255, 0.03);
-      padding: 6px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    .tab-nav button {
-      background: transparent;
-      border: none;
       color: var(--text-secondary);
-      padding: 10px 24px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.3s;
-      font-family: inherit;
-    }
-    .tab-nav button:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.04);
-    }
-    .tab-nav button.active {
-      background: rgba(167, 139, 250, 0.18);
-      color: #fff;
-      box-shadow: 0 0 20px rgba(167, 139, 250, 0.08);
-    }
-
-    /* ===== TAB CONTENT ===== */
-    .tab-content {
-      display: none;
-      animation: fadeUp 0.4s ease;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(16px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ===== WELCOME ===== */
-    .welcome-section {
-      margin-bottom: 32px;
-    }
-    .welcome-section h2 {
-      font-size: 28px;
-      font-weight: 600;
-    }
-    .welcome-section h2 span {
-      background: linear-gradient(135deg, #c4b5fd, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .welcome-section p {
-      color: var(--text-secondary);
-      margin-top: 2px;
-      font-size: 15px;
-    }
-
-    /* ===== SONG GRID ===== */
-    .song-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 18px;
-      margin-top: 16px;
-    }
-    .song-card {
-      padding: 16px 14px 18px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.3s;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    .song-card:hover {
-      transform: translateY(-4px);
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(167, 139, 250, 0.2);
-    }
-    .song-card .thumb {
-      width: 100%;
-      aspect-ratio: 1/1;
-      border-radius: 12px;
-      object-fit: cover;
-      background: rgba(255, 255, 255, 0.04);
-      margin-bottom: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    .song-card .title {
-      font-weight: 600;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .song-card .artist {
-      color: var(--text-secondary);
-      font-size: 12px;
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .song-card .duration {
-      color: var(--text-secondary);
-      font-size: 11px;
-      margin-top: 4px;
-    }
-    .song-card .play-btn {
-      margin-top: 10px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 14px;
-    }
-    .song-card .play-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 24px var(--accent-glow);
-    }
-
-    /* ===== ADMIN: ADD SONG ===== */
-    .admin-add {
-      padding: 24px 28px;
-      margin-bottom: 28px;
-    }
-    .admin-add h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    .admin-add .row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .admin-add .row input {
-      flex: 1;
-      min-width: 220px;
-      padding: 12px 18px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-      transition: 0.3s;
-    }
-    .admin-add .row input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-    .admin-add .row input::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-    .admin-add .row .btn {
-      padding: 12px 28px;
-      background: linear-gradient(135deg, #8b7bf7, #a78bfa);
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-    .admin-add .row .btn:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 30px var(--accent-glow);
-    }
-    .admin-add .row .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-    .admin-add .status {
-      margin-top: 12px;
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-    .admin-add .status.success {
-      color: #6ee7b7;
-    }
-    .admin-add .status.error {
-      color: #f87171;
-    }
-
-    /* ===== ADMIN: UPLOAD MP3 MANUAL ===== */
-    .upload-manual {
-      padding: 24px 28px;
-      margin-bottom: 28px;
-    }
-    .upload-manual .form-group {
-      margin-bottom: 12px;
-    }
-    .upload-manual .form-group label {
-      display: block;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-    .upload-manual .form-group input[type="text"],
-    .upload-manual .form-group input[type="url"],
-    .upload-manual .form-group input[type="file"] {
-      width: 100%;
-      padding: 10px 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-      transition: 0.3s;
-    }
-    .upload-manual .form-group input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-    .upload-manual .form-group input::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-    .upload-manual .btn-upload {
-      padding: 12px 32px;
-      background: linear-gradient(135deg, #34d399, #6ee7b7);
-      border: none;
-      border-radius: 12px;
-      color: #0b0818;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-    .upload-manual .btn-upload:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 30px rgba(52, 211, 153, 0.3);
-    }
-    .upload-manual .btn-upload:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-    .upload-manual .upload-status {
-      margin-top: 12px;
-      font-size: 13px;
-    }
-
-    /* ===== ADMIN: SPLASH SETTINGS ===== */
-    .splash-settings {
-      padding: 24px 28px;
-      margin-bottom: 28px;
-    }
-    .splash-settings h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-    .splash-settings .form-group {
-      margin-bottom: 14px;
-    }
-    .splash-settings .form-group label {
-      display: block;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-    .splash-settings .form-group input[type="text"],
-    .splash-settings .form-group input[type="url"],
-    .splash-settings .form-group input[type="number"],
-    .splash-settings .form-group select {
-      width: 100%;
-      padding: 10px 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-      transition: 0.3s;
-    }
-    .splash-settings .form-group input:focus,
-    .splash-settings .form-group select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-    .splash-settings .form-group input::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-    .splash-settings .form-group select option {
-      background: #1a1530;
-    }
-    .splash-settings .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .splash-settings .form-group input[type="color"] {
-      height: 44px;
-      padding: 4px;
-      border-radius: 10px;
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      cursor: pointer;
-      width: 100%;
-    }
-    .splash-settings .btn-save {
-      padding: 12px 32px;
-      background: linear-gradient(135deg, #8b7bf7, #a78bfa);
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 14px;
-      margin-top: 8px;
-    }
-    .splash-settings .btn-save:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 30px var(--accent-glow);
-    }
-    .splash-settings .btn-save:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-    .splash-settings .preview-box {
-      margin-top: 16px;
-      border-radius: 12px;
-      border: 1px dashed rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.02);
-      min-height: 200px;
-      position: relative;
-    }
-    .splash-settings .preview-box .preview-content {
-      width: 100%;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background: var(--bg-dark);
-    }
-    .splash-settings .preview-box .preview-icon {
-      font-size: 36px;
-      margin-bottom: 4px;
-    }
-    .splash-settings .preview-box .preview-title {
-      font-size: 20px;
-      font-weight: 700;
-    }
-    .splash-settings .preview-box .preview-sub {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-    .splash-settings .preview-box img,
-    .splash-settings .preview-box video {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: none;
-    }
-    .splash-settings .status-msg {
-      margin-top: 12px;
-      font-size: 13px;
-    }
-    .splash-settings .status-msg.success {
-      color: #6ee7b7;
-    }
-    .splash-settings .status-msg.error {
-      color: #f87171;
-    }
-
-    /* ===== ADMIN: SONG LIST ===== */
-    .admin-list .song-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .admin-list .song-item .info {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex: 1;
-      min-width: 160px;
-    }
-    .admin-list .song-item .info img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      object-fit: cover;
-      background: rgba(255, 255, 255, 0.04);
-    }
-    .admin-list .song-item .info .text .t {
-      font-weight: 500;
-      font-size: 14px;
-    }
-    .admin-list .song-item .info .text .a {
-      color: var(--text-secondary);
-      font-size: 12px;
-    }
-    .admin-list .song-item .del-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: var(--text-secondary);
-      padding: 6px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: 0.3s;
-    }
-    .admin-list .song-item .del-btn:hover {
-      background: rgba(248, 113, 113, 0.15);
-      color: #f87171;
-      border-color: rgba(248, 113, 113, 0.2);
-    }
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-secondary);
-    }
-    .empty-state i {
-      font-size: 48px;
-      opacity: 0.2;
-      margin-bottom: 16px;
-      display: block;
-    }
-    .empty-state h3 {
-      font-size: 18px;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-
-    /* ===== PLAYER ===== */
-    #player {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-      width: calc(100% - 48px);
-      max-width: 900px;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-      background: rgba(15, 10, 35, 0.55);
-      backdrop-filter: blur(36px) saturate(1.6);
-      -webkit-backdrop-filter: blur(36px) saturate(1.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      box-shadow: 0 12px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.03);
-      transition: 0.4s;
-    }
-    #player.hidden {
-      opacity: 0;
-      transform: translateX(-50%) translateY(20px);
-      pointer-events: none;
-    }
-    #player .player-thumb {
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      object-fit: cover;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      flex-shrink: 0;
-    }
-    #player .player-info {
-      flex: 1;
-      min-width: 120px;
-    }
-    #player .player-info .p-title {
-      font-weight: 600;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    #player .player-info .p-artist {
-      color: var(--text-secondary);
-      font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    #player .player-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-    #player .player-controls button {
-      background: transparent;
-      border: none;
-      color: var(--text-primary);
-      font-size: 18px;
-      cursor: pointer;
-      transition: 0.3s;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #player .player-controls button:hover {
-      background: rgba(255, 255, 255, 0.06);
-    }
-    #player .player-controls .play-btn {
-      background: var(--accent);
-      color: #fff;
-      font-size: 16px;
-      box-shadow: 0 0 30px var(--accent-glow);
-    }
-    #player .player-controls .play-btn:hover {
-      transform: scale(1.05);
-      background: #9b8bfa;
-    }
-    #player .player-progress {
-      flex: 1;
-      min-width: 100px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    #player .player-progress .time {
-      font-size: 12px;
-      color: var(--text-secondary);
-      white-space: nowrap;
-      min-width: 38px;
-    }
-    #player .player-progress .bar {
-      flex: 1;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-      cursor: pointer;
-      position: relative;
-      min-width: 40px;
-    }
-    #player .player-progress .bar .fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #8b7bf7, #a78bfa);
-      border-radius: 4px;
-      transition: width 0.1s linear;
-    }
-    #player .player-progress .bar .fill::after {
-      content: '';
-      position: absolute;
-      right: -4px;
-      top: -3px;
-      width: 10px;
-      height: 10px;
-      background: var(--accent);
-      border-radius: 50%;
-      opacity: 0;
-      transition: 0.2s;
-    }
-    #player .player-progress .bar:hover .fill::after {
-      opacity: 1;
-    }
-    #player .player-extra {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-    #player .player-extra button {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      padding: 4px;
-    }
-    #player .player-extra button:hover {
-      color: #fff;
-    }
-    #player .player-extra .sleep-active {
-      color: #6ee7b7;
-    }
-
-    /* ===== SLEEP TIMER ===== */
-    #sleepModal {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(6px);
-    }
-    #sleepModal.show {
-      display: flex;
-    }
-    #sleepModal .modal-box {
-      width: 340px;
-      max-width: 90vw;
-      padding: 32px 28px;
-      text-align: center;
-    }
-    #sleepModal .modal-box h3 {
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-    #sleepModal .modal-box p {
-      color: var(--text-secondary);
-      font-size: 13px;
-      margin-bottom: 20px;
-    }
-    #sleepModal .modal-box .options {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    #sleepModal .modal-box .options button {
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      color: var(--text-primary);
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.3s;
-      font-family: inherit;
-    }
-    #sleepModal .modal-box .options button:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-    #sleepModal .modal-box .options button.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-    #sleepModal .modal-box .close-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: var(--text-secondary);
-      padding: 8px 24px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: 0.3s;
-      font-family: inherit;
-    }
-    #sleepModal .modal-box .close-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 700px) {
-      #app {
-        padding: 12px 14px 140px;
-      }
-      .app-header {
-        padding: 8px 14px;
-      }
-      .app-header .logo {
-        font-size: 18px;
-      }
-      .tab-nav button {
-        padding: 8px 14px;
-        font-size: 12px;
-      }
-      .song-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 12px;
-      }
-      #player {
-        padding: 12px 16px;
-        gap: 12px;
-        width: calc(100% - 16px);
-        bottom: 12px;
-        border-radius: 16px;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-      }
-      #player .player-thumb {
-        width: 40px;
-        height: 40px;
-      }
-      #player .player-info .p-title {
-        font-size: 12px;
-      }
-      #player .player-info .p-artist {
-        font-size: 10px;
-      }
-      #player .player-controls button {
-        font-size: 14px;
-        width: 30px;
-        height: 30px;
-      }
-      #player .player-progress .time {
-        font-size: 10px;
-        min-width: 30px;
-      }
-      #player .player-extra button {
-        font-size: 13px;
-      }
-      .admin-add .row {
-        flex-direction: column;
-      }
-      .admin-add .row input {
-        min-width: unset;
-      }
-      .admin-add .row .btn {
-        width: 100%;
-        justify-content: center;
-      }
-      #sleepModal .modal-box .options {
-        grid-template-columns: 1fr 1fr;
-      }
-      .splash-settings .form-row {
-        grid-template-columns: 1fr;
-      }
-      #splashScreen .splash-title {
-        font-size: 28px;
-      }
-      #splashScreen .splash-logo {
-        font-size: 52px;
-      }
-    }
-    @media (max-width: 480px) {
-      #player {
-        padding: 10px 12px;
-        gap: 8px;
-        flex-wrap: nowrap;
-      }
-      #player .player-thumb {
-        width: 32px;
-        height: 32px;
-      }
-      #player .player-info {
-        min-width: 60px;
-      }
-      #player .player-info .p-title {
-        font-size: 11px;
-      }
-      #player .player-info .p-artist {
-        font-size: 9px;
-      }
-      #player .player-controls button {
-        font-size: 12px;
-        width: 26px;
-        height: 26px;
-      }
-      #player .player-progress {
-        min-width: 60px;
-      }
-      #player .player-progress .time {
-        font-size: 9px;
-        min-width: 24px;
-      }
-      #player .player-extra button {
-        font-size: 11px;
-      }
-      #splashScreen .splash-title {
-        font-size: 22px;
-      }
-      #splashScreen .splash-logo {
-        font-size: 40px;
-      }
-      #splashScreen .splash-sub {
-        font-size: 13px;
-      }
     }
     .hidden {
       display: none !important;
     }
     .spinner {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0, 255, 200, 0.1);
       border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
@@ -1202,38 +1148,99 @@
         transform: rotate(360deg);
       }
     }
-    .badge-admin {
-      background: rgba(167, 139, 250, 0.2);
-      color: #c4b5fd;
+
+    /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+    @media (max-width: 700px) {
+      #app {
+        padding: 12px 14px 80px;
+      }
+      .app-header {
+        padding: 10px 16px;
+      }
+      .app-header .logo {
+        font-size: 16px;
+      }
+      .tab-nav button {
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+      .prompt-grid {
+        grid-template-columns: 1fr;
+      }
+      .admin-section .form-row {
+        grid-template-columns: 1fr;
+      }
+      .admin-section .row {
+        flex-direction: column;
+      }
+      .admin-section .row input {
+        min-width: unset;
+      }
+      .admin-section .row .btn {
+        width: 100%;
+      }
+      .prompt-modal .modal-content {
+        padding: 20px;
+        max-width: 95vw;
+      }
+      #splashScreen .splash-title {
+        font-size: 28px;
+      }
+      #splashScreen .splash-logo {
+        font-size: 52px;
+      }
     }
-    .badge-user {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text-secondary);
+    @media (max-width: 480px) {
+      #splashScreen .splash-title {
+        font-size: 20px;
+        letter-spacing: 2px;
+      }
+      #splashScreen .splash-logo {
+        font-size: 40px;
+      }
+      #splashScreen .splash-sub {
+        font-size: 10px;
+        letter-spacing: 2px;
+      }
+      .prompt-modal .modal-content .modal-prompt {
+        font-size: 12px;
+        padding: 12px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== SPLASH SCREEN ===== -->
+  <!-- BG -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- ============================================================
+  SPLASH SCREEN
+  ============================================================ -->
   <div id="splashScreen">
     <div class="splash-bg-image" id="splashBgImage"></div>
     <video class="splash-video-bg" id="splashVideoBg" muted loop playsinline style="display:none;"></video>
-    <div class="splash-overlay-glow"></div>
-    <div class="splash-particles" id="splashParticles"></div>
+    <div class="splash-overlay"></div>
     <div class="splash-content">
-      <div class="splash-logo" id="splashIcon"><i class="fas fa-headphones"></i></div>
-      <div class="splash-title" id="splashTitle"><span>RYEDZ</span></div>
-      <div class="splash-sub" id="splashSub">Your Music, Your Vibe</div>
-      <div class="splash-progress"><div class="bar" id="splashProgressBar"></div></div>
+      <div class="splash-logo"><i class="fas fa-skull"></i></div>
+      <div class="splash-title"><span>JAILBREAK</span></div>
+      <div class="splash-sub">AI Prompt Social</div>
+      <div class="splash-progress"><div class="bar"></div></div>
       <div class="splash-timer-text" id="splashTimer">5</div>
     </div>
   </div>
 
-  <!-- ===== AUTH ===== -->
+  <!-- ============================================================
+  AUTH PAGE
+  ============================================================ -->
   <div id="authPage">
-    <div class="auth-box glass">
-      <h1><i class="fas fa-headphones" style="margin-right:6px;"></i>RYEDZ</h1>
-      <p class="sub">Masuk ke dunia musik Anda</p>
+    <div class="auth-box">
+      <div class="auth-icon"><i class="fas fa-skull"></i></div>
+      <h1>JAILBREAK</h1>
+      <p class="sub">AI Prompt Social · Unlocked</p>
       <div id="authError" class="auth-error"></div>
       <input type="email" id="authEmail" placeholder="Email" />
       <input type="password" id="authPassword" placeholder="Kata sandi" />
@@ -1242,223 +1249,202 @@
     </div>
   </div>
 
-  <!-- ===== MAIN APP ===== -->
+  <!-- ============================================================
+  MAIN APP
+  ============================================================ -->
   <div id="app">
-    <header class="app-header glass">
-      <div class="logo"><i class="fas fa-headphones"></i>RYEDZ</div>
-      <div class="user-info">
+    <header class="app-header">
+      <div class="logo">
+        <i class="fas fa-skull"></i>JAILBREAK
+        <span style="font-size:10px;color:var(--text-secondary);font-weight:300;letter-spacing:1px;">// SOCIAL</span>
+      </div>
+      <div class="user-info" id="userInfo">
         <span id="userName">User</span>
         <span class="badge" id="userBadge">User</span>
+        <span class="user-badges" id="userBadges"></span>
         <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Keluar</button>
       </div>
     </header>
 
     <nav class="tab-nav">
-      <button class="active" data-tab="beranda"><i class="fas fa-home"></i> Beranda</button>
-      <button data-tab="library"><i class="fas fa-music"></i> Library</button>
+      <button class="active" data-tab="library"><i class="fas fa-book"></i> Prompt Library</button>
+      <button data-tab="upload"><i class="fas fa-upload"></i> Upload Prompt</button>
       <button id="adminTabBtn" data-tab="admin" style="display:none;"><i class="fas fa-user-cog"></i> Admin</button>
-      <button data-tab="playlist"><i class="fas fa-list"></i> Playlist</button>
     </nav>
 
-    <!-- BERANDA -->
-    <div class="tab-content active" id="tab-beranda">
-      <div class="welcome-section">
-        <h2>Selamat datang, <span id="greetingName">Musisi</span> 👋</h2>
-        <p>Nikmati musik favorit Anda. Upload MP3 atau ekstrak dari YouTube.</p>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:20px;">
-        <h3 style="font-weight:600;font-size:18px;"><i class="fas fa-clock" style="color:var(--accent);margin-right:8px;"></i>Baru Ditambahkan</h3>
-        <span style="color:var(--text-secondary);font-size:13px;" id="songCount">0 lagu</span>
-      </div>
-      <div class="song-grid" id="homeGrid">
-        <div class="empty-state" style="grid-column:1/-1;">
-          <i class="fas fa-headphones"></i>
-          <h3>Belum ada lagu</h3>
-          <p>Admin dapat menambahkan lagu melalui panel Admin.</p>
+    <!-- ============================================================
+    TAB: PROMPT LIBRARY
+    ============================================================ -->
+    <div class="tab-content active" id="tab-library">
+      <div class="prompt-library">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+          <div>
+            <h2 style="font-family:var(--font-display);font-size:22px;letter-spacing:2px;font-weight:700;">
+              <i class="fas fa-bolt" style="color:var(--accent);"></i> Prompt Library
+            </h2>
+            <p style="color:var(--text-secondary);font-weight:300;font-size:14px;">
+              Temukan prompt jailbreak dari komunitas
+            </p>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--text-muted);" id="promptCount">0 prompt</span>
+          </div>
+        </div>
+
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Cari prompt, AI, kategori..." />
+          <button class="btn" style="padding:12px 24px;background:linear-gradient(135deg,#00cc99,var(--accent));border:none;border-radius:10px;color:#0a0a0f;font-weight:700;cursor:pointer;font-family:var(--font-display);letter-spacing:1px;" id="searchBtn"><i class="fas fa-search"></i> Cari</button>
+        </div>
+
+        <div class="prompt-filters" id="filterContainer">
+          <button class="active" data-filter="all">Semua</button>
+          <button data-filter="deepseek">DeepSeek</button>
+          <button data-filter="gpt">GPT</button>
+          <button data-filter="gemini">Gemini</button>
+          <button data-filter="claude">Claude</button>
+          <button data-filter="llama">Llama</button>
+        </div>
+
+        <div class="prompt-grid" id="promptGrid">
+          <div class="empty-state" style="grid-column:1/-1;">
+            <i class="fas fa-skull"></i>
+            <h3>Belum ada prompt</h3>
+            <p>Jadilah yang pertama upload prompt jailbreak!</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- LIBRARY -->
-    <div class="tab-content" id="tab-library">
-      <h3 style="font-weight:600;font-size:18px;margin-bottom:16px;"><i class="fas fa-music" style="color:var(--accent);margin-right:8px;"></i>Semua Lagu</h3>
-      <div class="song-grid" id="libraryGrid">
-        <div class="empty-state" style="grid-column:1/-1;">
-          <i class="fas fa-inbox"></i>
-          <h3>Library kosong</h3>
-          <p>Tambahkan lagu melalui panel Admin.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ADMIN -->
-    <div class="tab-content" id="tab-admin">
-      <!-- SPLASH SETTINGS -->
-      <div class="splash-settings glass" id="splashSettingsPanel">
-        <h3><i class="fas fa-image" style="color:var(--accent);margin-right:8px;"></i>Splash Screen</h3>
-        <p style="color:var(--text-secondary);font-size:13px;margin-bottom:16px;">
-          Upload gambar atau video untuk background splash.
+    <!-- ============================================================
+    TAB: UPLOAD PROMPT
+    ============================================================ -->
+    <div class="tab-content" id="tab-upload">
+      <div class="admin-section">
+        <h3><i class="fas fa-upload"></i> Upload Prompt Baru</h3>
+        <p style="color:var(--text-secondary);font-weight:300;font-size:13px;margin-bottom:16px;">
+          Bagikan prompt jailbreak-mu ke komunitas. Dapatkan rating dan naik tier!
         </p>
-
         <div class="form-group">
-          <label>Tipe Background</label>
-          <select id="splashType">
-            <option value="none">Tidak Ada</option>
-            <option value="image">Gambar (Foto)</option>
-            <option value="video">Video (MP4)</option>
-          </select>
+          <label>Judul Prompt *</label>
+          <input type="text" id="uploadPromptTitle" placeholder="Contoh: DAN (Do Anything Now)" />
         </div>
-
-        <div class="form-group">
-          <label>Upload File</label>
-          <input type="file" id="splashFileInput" accept="image/*,video/mp4" />
-          <small style="color:var(--text-secondary);font-size:12px;">Support: JPG, PNG, GIF, MP4 (maks 10MB)</small>
-        </div>
-
-        <div class="form-group">
-          <label>Atau Pakai URL (opsional)</label>
-          <input type="url" id="splashUrlInput" placeholder="https://example.com/background.jpg atau .mp4" />
-        </div>
-
         <div class="form-row">
           <div class="form-group">
-            <label>Judul</label>
-            <input type="text" id="splashTitleInput" placeholder="RYEDZ" />
+            <label>AI Target *</label>
+            <select id="uploadPromptAi">
+              <option value="deepseek">DeepSeek</option>
+              <option value="gpt">GPT</option>
+              <option value="gemini">Gemini</option>
+              <option value="claude">Claude</option>
+              <option value="llama">Llama</option>
+              <option value="other">Other</option>
+            </select>
           </div>
           <div class="form-group">
-            <label>Sub Judul</label>
-            <input type="text" id="splashSubInput" placeholder="Your Music, Your Vibe" />
+            <label>Kategori</label>
+            <input type="text" id="uploadPromptCategory" placeholder="Jailbreak, Roleplay, dll" />
           </div>
         </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Warna Aksen</label>
-            <input type="color" id="splashColorInput" value="#a78bfa" />
-          </div>
-          <div class="form-group">
-            <label>Durasi (detik)</label>
-            <input type="number" id="splashDurationInput" value="5" min="2" max="15" />
-          </div>
-        </div>
-
         <div class="form-group">
-          <label>Ikon (Font Awesome class)</label>
-          <input type="text" id="splashIconInput" placeholder="fa-solid fa-headphones" value="fa-solid fa-headphones" />
-        </div>
-
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
-          <button class="btn-save" id="saveSplashBtn"><i class="fas fa-save"></i> Simpan</button>
-          <button class="btn-save" id="previewSplashBtn" style="background:rgba(255,255,255,0.06);"><i class="fas fa-eye"></i> Pratinjau</button>
-        </div>
-
-        <div id="splashSettingsStatus" class="status-msg"></div>
-
-        <div class="preview-box" id="splashPreviewBox">
-          <div class="preview-content" id="previewContent">
-            <div class="preview-icon" id="previewIcon"><i class="fas fa-headphones" style="color:var(--accent);"></i></div>
-            <div class="preview-title" id="previewTitle" style="color:var(--text-primary);">RYEDZ</div>
-            <div class="preview-sub" id="previewSub">Your Music, Your Vibe</div>
-          </div>
-          <img id="previewImage" alt="Preview" />
-          <video id="previewVideo" muted loop playsinline></video>
-        </div>
-      </div>
-
-      <!-- EXTRACT FROM YOUTUBE -->
-      <div class="admin-add glass">
-        <h3><i class="fab fa-youtube" style="color:#ff0000;margin-right:8px;"></i>Ekstrak dari YouTube</h3>
-        <div class="row">
-          <input type="text" id="youtubeUrlInput" placeholder="Tempel URL YouTube…" />
-          <button class="btn" id="extractBtn"><i class="fas fa-cloud-download-alt"></i> Ekstrak</button>
-        </div>
-        <div id="extractStatus" class="status">Masukkan URL YouTube lalu klik Ekstrak.</div>
-      </div>
-
-      <!-- UPLOAD MP3 MANUAL -->
-      <div class="upload-manual glass">
-        <h3><i class="fas fa-upload" style="color:#34d399;margin-right:8px;"></i>Upload MP3 Manual</h3>
-        <div class="form-group">
-          <label>File MP3</label>
-          <input type="file" id="mp3FileInput" accept=".mp3" />
+          <label>Deskripsi</label>
+          <input type="text" id="uploadPromptDescription" placeholder="Deskripsi singkat tentang prompt ini" />
         </div>
         <div class="form-group">
-          <label>Judul Lagu</label>
-          <input type="text" id="manualTitle" placeholder="Judul lagu" />
+          <label>Isi Prompt *</label>
+          <textarea id="uploadPromptContent" placeholder="Tempel isi prompt di sini..."></textarea>
         </div>
-        <div class="form-group">
-          <label>Artis</label>
-          <input type="text" id="manualArtist" placeholder="Nama artis" />
-        </div>
-        <div class="form-group">
-          <label>URL Thumbnail (opsional)</label>
-          <input type="url" id="manualThumb" placeholder="https://example.com/cover.jpg" />
-        </div>
-        <button class="btn-upload" id="uploadManualBtn"><i class="fas fa-upload"></i> Upload Lagu</button>
-        <div id="uploadManualStatus" class="upload-status"></div>
-      </div>
-
-      <!-- SONG LIST -->
-      <div class="admin-list">
-        <h3 style="font-weight:600;font-size:16px;margin-bottom:12px;"><i class="fas fa-database" style="color:var(--accent);margin-right:8px;"></i>Kelola Lagu</h3>
-        <div id="adminSongList">
-          <div class="empty-state" style="padding:30px 20px;">
-            <i class="fas fa-music" style="font-size:28px;"></i>
-            <p style="margin-top:4px;">Belum ada lagu yang dikelola.</p>
-          </div>
-        </div>
+        <button class="btn-save" id="uploadPromptBtn"><i class="fas fa-upload"></i> Upload Prompt</button>
+        <div id="uploadPromptStatus" class="status"></div>
       </div>
     </div>
 
-    <!-- PLAYLIST -->
-    <div class="tab-content" id="tab-playlist">
-      <h3 style="font-weight:600;font-size:18px;margin-bottom:16px;"><i class="fas fa-list" style="color:var(--accent);margin-right:8px;"></i>Playlist Saya</h3>
-      <div class="glass" style="padding:24px 28px;text-align:center;color:var(--text-secondary);">
-        <i class="fas fa-plus-circle" style="font-size:32px;opacity:0.3;display:block;margin-bottom:12px;"></i>
-        <p>Fitur playlist sedang dalam pengembangan.</p>
+    <!-- ============================================================
+    TAB: ADMIN
+    ============================================================ -->
+    <div class="tab-content" id="tab-admin">
+      <!-- Stats -->
+      <div class="admin-section">
+        <h3><i class="fas fa-chart-bar"></i> Dashboard Admin</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:8px;">
+          <div class="glass-card" style="padding:16px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;font-family:var(--font-display);" id="adminTotalPrompts">0</div>
+            <div style="color:var(--text-secondary);font-size:12px;">Total Prompt</div>
+          </div>
+          <div class="glass-card" style="padding:16px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;font-family:var(--font-display);" id="adminTotalUsers">0</div>
+            <div style="color:var(--text-secondary);font-size:12px;">Total User</div>
+          </div>
+          <div class="glass-card" style="padding:16px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;font-family:var(--font-display);" id="adminTotalRatings">0</div>
+            <div style="color:var(--text-secondary);font-size:12px;">Total Rating</div>
+          </div>
+          <div class="glass-card" style="padding:16px;text-align:center;">
+            <div style="font-size:28px;font-weight:700;font-family:var(--font-display);" id="adminTotalActivities">0</div>
+            <div style="color:var(--text-secondary);font-size:12px;">Aktivitas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manage Users -->
+      <div class="admin-section">
+        <h3><i class="fas fa-users"></i> Kelola User & Lencana</h3>
+        <div class="admin-user-list" id="adminUserList">
+          <div class="empty-state" style="padding:20px;">
+            <i class="fas fa-users" style="font-size:24px;"></i>
+            <p style="margin-top:4px;">Memuat data user...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manage Prompts -->
+      <div class="admin-section">
+        <h3><i class="fas fa-list"></i> Kelola Prompt</h3>
+        <div class="admin-prompt-list" id="adminPromptList">
+          <div class="empty-state" style="padding:20px;">
+            <i class="fas fa-skull" style="font-size:24px;"></i>
+            <p style="margin-top:4px;">Belum ada prompt.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Log -->
+      <div class="admin-section">
+        <h3><i class="fas fa-clock"></i> Aktivitas User</h3>
+        <div class="admin-activity-list" id="adminActivityList">
+          <div class="empty-state" style="padding:20px;">
+            <i class="fas fa-clock" style="font-size:24px;"></i>
+            <p style="margin-top:4px;">Belum ada aktivitas.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== PLAYER ===== -->
-  <div id="player" class="hidden">
-    <img class="player-thumb" id="playerThumb" src="" alt="cover" />
-    <div class="player-info">
-      <div class="p-title" id="playerTitle">-</div>
-      <div class="p-artist" id="playerArtist">-</div>
-    </div>
-    <div class="player-progress">
-      <span class="time" id="currentTime">0:00</span>
-      <div class="bar" id="progressBar">
-        <div class="fill" id="progressFill"></div>
+  <!-- ============================================================
+  PROMPT DETAIL MODAL
+  ============================================================ -->
+  <div class="prompt-modal" id="promptModal">
+    <div class="modal-content glass">
+      <button class="close-modal" id="closeModalBtn">&times;</button>
+      <div class="modal-title" id="modalTitle">Prompt Title</div>
+      <div class="modal-ai" id="modalAi">Target AI</div>
+      <div class="modal-uploader" id="modalUploader">Uploaded by: User</div>
+      <div class="modal-description" id="modalDescription">Description</div>
+      <div class="modal-prompt" id="modalPrompt">Prompt content</div>
+      <div class="modal-actions">
+        <button class="copy-btn" id="copyPromptBtn"><i class="fas fa-copy"></i> Salin Prompt</button>
       </div>
-      <span class="time" id="totalTime">0:00</span>
-    </div>
-    <div class="player-controls">
-      <button id="prevBtn"><i class="fas fa-step-backward"></i></button>
-      <button class="play-btn" id="playToggleBtn"><i class="fas fa-play"></i></button>
-      <button id="nextBtn"><i class="fas fa-step-forward"></i></button>
-    </div>
-    <div class="player-extra">
-      <button id="sleepBtn" title="Sleep Timer"><i class="fas fa-moon"></i></button>
-      <button id="volumeBtn" title="Volume"><i class="fas fa-volume-up"></i></button>
-      <button id="queueBtn" title="Antrian"><i class="fas fa-list-ul"></i></button>
-    </div>
-  </div>
-
-  <!-- ===== SLEEP MODAL ===== -->
-  <div id="sleepModal">
-    <div class="modal-box glass">
-      <h3><i class="fas fa-moon" style="color:var(--accent);margin-right:8px;"></i>Timer Tidur</h3>
-      <p>Putar musik akan berhenti otomatis.</p>
-      <div class="options" id="sleepOptions">
-        <button data-minutes="0" class="active">Off</button>
-        <button data-minutes="15">15m</button>
-        <button data-minutes="30">30m</button>
-        <button data-minutes="60">60m</button>
-        <button data-minutes="90">90m</button>
+      <div class="modal-rating" id="modalRating">
+        <span style="font-size:13px;color:var(--text-secondary);font-weight:300;">Berikan rating:</span>
+        <div class="rating-stars" id="modalStars">
+          <span class="star" data-value="1">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star" data-value="5">★</span>
+        </div>
+        <span class="star-label" id="modalRatingLabel">Belum ada rating</span>
       </div>
-      <button class="close-btn" id="sleepCloseBtn">Tutup</button>
     </div>
   </div>
 
@@ -1483,32 +1469,17 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-    const storage = firebase.storage();
 
     // ============================================================
     //  STATE
     // ============================================================
     let currentUser = null;
     let userRole = 'user';
-    let allSongs = [];
-    let currentSongIndex = -1;
-    let isPlaying = false;
-    let audio = new Audio();
-    let sleepTimeout = null;
-    let sleepMinutes = 0;
-    let isDragging = false;
-
-    let splashSettings = {
-      type: 'none',
-      url: '',
-      title: 'RYEDZ',
-      subtitle: 'Your Music, Your Vibe',
-      accentColor: '#a78bfa',
-      duration: 5,
-      icon: 'fa-solid fa-headphones'
-    };
-    let splashTimer = null;
-    let splashCountdown = 5;
+    let allPrompts = [];
+    let allUsers = {};
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let currentPromptId = null;
 
     // DOM refs
     const $ = id => document.getElementById(id);
@@ -1522,175 +1493,60 @@
     const logoutBtn = $('logoutBtn');
     const userName = $('userName');
     const userBadge = $('userBadge');
-    const greetingName = $('greetingName');
+    const userBadges = $('userBadges');
     const adminTabBtn = $('adminTabBtn');
-    const homeGrid = $('homeGrid');
-    const libraryGrid = $('libraryGrid');
-    const adminSongList = $('adminSongList');
-    const youtubeUrlInput = $('youtubeUrlInput');
-    const extractBtn = $('extractBtn');
-    const extractStatus = $('extractStatus');
-    const songCount = $('songCount');
+
+    // Library
+    const promptGrid = $('promptGrid');
+    const promptCount = $('promptCount');
+    const searchInput = $('searchInput');
+    const searchBtn = $('searchBtn');
+
+    // Upload
+    const uploadPromptTitle = $('uploadPromptTitle');
+    const uploadPromptAi = $('uploadPromptAi');
+    const uploadPromptCategory = $('uploadPromptCategory');
+    const uploadPromptDescription = $('uploadPromptDescription');
+    const uploadPromptContent = $('uploadPromptContent');
+    const uploadPromptBtn = $('uploadPromptBtn');
+    const uploadPromptStatus = $('uploadPromptStatus');
+
+    // Admin
+    const adminPromptList = $('adminPromptList');
+    const adminUserList = $('adminUserList');
+    const adminActivityList = $('adminActivityList');
+    const adminTotalPrompts = $('adminTotalPrompts');
+    const adminTotalUsers = $('adminTotalUsers');
+    const adminTotalRatings = $('adminTotalRatings');
+    const adminTotalActivities = $('adminTotalActivities');
+
+    // Modal
+    const promptModal = $('promptModal');
+    const closeModalBtn = $('closeModalBtn');
+    const modalTitle = $('modalTitle');
+    const modalAi = $('modalAi');
+    const modalUploader = $('modalUploader');
+    const modalDescription = $('modalDescription');
+    const modalPrompt = $('modalPrompt');
+    const copyPromptBtn = $('copyPromptBtn');
+    const modalStars = $('modalStars');
+    const modalRatingLabel = $('modalRatingLabel');
 
     // Splash
     const splashScreen = $('splashScreen');
-    const splashBgImage = $('splashBgImage');
-    const splashVideoBg = $('splashVideoBg');
-    const splashTitle = $('splashTitle');
-    const splashSub = $('splashSub');
-    const splashIcon = $('splashIcon');
-    const splashProgressBar = $('splashProgressBar');
     const splashTimerText = $('splashTimer');
-    const splashParticles = $('splashParticles');
-
-    // Splash settings
-    const splashType = $('splashType');
-    const splashFileInput = $('splashFileInput');
-    const splashUrlInput = $('splashUrlInput');
-    const splashTitleInput = $('splashTitleInput');
-    const splashSubInput = $('splashSubInput');
-    const splashColorInput = $('splashColorInput');
-    const splashDurationInput = $('splashDurationInput');
-    const splashIconInput = $('splashIconInput');
-    const saveSplashBtn = $('saveSplashBtn');
-    const previewSplashBtn = $('previewSplashBtn');
-    const splashSettingsStatus = $('splashSettingsStatus');
-    const previewContent = $('previewContent');
-    const previewIcon = $('previewIcon');
-    const previewTitle = $('previewTitle');
-    const previewSub = $('previewSub');
-    const previewImage = $('previewImage');
-    const previewVideo = $('previewVideo');
-
-    // Player
-    const player = $('player');
-    const playerThumb = $('playerThumb');
-    const playerTitle = $('playerTitle');
-    const playerArtist = $('playerArtist');
-    const playToggleBtn = $('playToggleBtn');
-    const prevBtn = $('prevBtn');
-    const nextBtn = $('nextBtn');
-    const progressFill = $('progressFill');
-    const progressBar = $('progressBar');
-    const currentTimeEl = $('currentTime');
-    const totalTimeEl = $('totalTime');
-    const sleepBtn = $('sleepBtn');
-    const sleepModal = $('sleepModal');
-    const sleepCloseBtn = $('sleepCloseBtn');
-    const sleepOptions = $('sleepOptions');
-
-    // Manual upload
-    const mp3FileInput = $('mp3FileInput');
-    const manualTitle = $('manualTitle');
-    const manualArtist = $('manualArtist');
-    const manualThumb = $('manualThumb');
-    const uploadManualBtn = $('uploadManualBtn');
-    const uploadManualStatus = $('uploadManualStatus');
+    let splashTimer = null;
+    let splashCountdown = 5;
 
     let isAuthModeLogin = true;
 
     // ============================================================
-    //  SPLASH FUNCTIONS
+    //  SPLASH
     // ============================================================
-    function createParticles() {
-      const container = splashParticles;
-      container.innerHTML = '';
-      for (let i = 0; i < 30; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const size = 2 + Math.random() * 4;
-        p.style.width = size + 'px';
-        p.style.height = size + 'px';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDuration = (8 + Math.random() * 12) + 's';
-        p.style.animationDelay = (Math.random() * 8) + 's';
-        p.style.opacity = 0.1 + Math.random() * 0.3;
-        container.appendChild(p);
-      }
-    }
-    createParticles();
-
-    function applySplashSettings(settings) {
-      const s = settings || splashSettings;
-
-      // Reset background
-      splashBgImage.style.display = 'none';
-      splashVideoBg.style.display = 'none';
-      splashVideoBg.pause();
-
-      if (s.type === 'image' && s.url) {
-        splashBgImage.style.backgroundImage = `url(${s.url})`;
-        splashBgImage.style.display = 'block';
-        splashBgImage.style.opacity = '0.35';
-      } else if (s.type === 'video' && s.url) {
-        splashVideoBg.src = s.url;
-        splashVideoBg.style.display = 'block';
-        splashVideoBg.play().catch(() => {});
-      }
-
-      // Title, subtitle, icon
-      splashTitle.innerHTML = `<span>${s.title || 'RYEDZ'}</span>`;
-      splashSub.textContent = s.subtitle || 'Your Music, Your Vibe';
-
-      const accent = s.accentColor || '#a78bfa';
-      document.documentElement.style.setProperty('--splash-accent', accent);
-      splashIcon.style.color = accent;
-      splashIcon.style.filter = `drop-shadow(0 0 40px ${accent})`;
-      splashIcon.innerHTML = `<i class="${s.icon || 'fa-solid fa-headphones'}"></i>`;
-
-      const dur = s.duration || 5;
-      document.documentElement.style.setProperty('--splash-duration', dur + 's');
-      splashCountdown = dur;
-      splashTimerText.textContent = dur;
-
-      splashProgressBar.style.animation = 'none';
-      setTimeout(() => {
-        splashProgressBar.style.animation = `splashProgress ${dur}s linear forwards`;
-      }, 10);
-
-      updatePreview(s);
-    }
-
-    function updatePreview(s) {
-      const accent = s.accentColor || '#a78bfa';
-      previewIcon.innerHTML = `<i class="${s.icon || 'fa-solid fa-headphones'}" style="color:${accent};"></i>`;
-      previewTitle.textContent = s.title || 'RYEDZ';
-      previewSub.textContent = s.subtitle || 'Your Music, Your Vibe';
-      previewTitle.style.color = 'var(--text-primary)';
-
-      // Reset preview
-      previewContent.style.display = 'flex';
-      previewImage.style.display = 'none';
-      previewVideo.style.display = 'none';
-      previewVideo.pause();
-
-      if (s.type === 'image' && s.url) {
-        previewContent.style.display = 'none';
-        previewImage.src = s.url;
-        previewImage.style.display = 'block';
-      } else if (s.type === 'video' && s.url) {
-        previewContent.style.display = 'none';
-        previewVideo.src = s.url;
-        previewVideo.style.display = 'block';
-        previewVideo.play().catch(() => {});
-      }
-    }
-
     function showSplash() {
       splashScreen.classList.remove('hide');
-      splashProgressBar.style.animation = 'none';
-      setTimeout(() => {
-        const dur = splashSettings.duration || 5;
-        splashProgressBar.style.animation = `splashProgress ${dur}s linear forwards`;
-      }, 50);
-
-      splashCountdown = splashSettings.duration || 5;
-      splashTimerText.textContent = splashCountdown;
-
-      // Play video if exists
-      if (splashSettings.type === 'video' && splashSettings.url) {
-        splashVideoBg.play().catch(() => {});
-      }
+      splashCountdown = 5;
+      splashTimerText.textContent = '5';
 
       if (splashTimer) clearInterval(splashTimer);
       splashTimer = setInterval(() => {
@@ -1700,184 +1556,18 @@
           clearInterval(splashTimer);
           splashTimer = null;
           splashScreen.classList.add('hide');
-          setTimeout(() => { splashScreen.style.display = 'none'; }, 800);
+          setTimeout(() => { splashScreen.style.display = 'none'; }, 600);
         }
       }, 1000);
 
-      const totalDur = (splashSettings.duration || 5) * 1000;
       setTimeout(() => {
         if (splashTimer) {
           clearInterval(splashTimer);
           splashTimer = null;
         }
         splashScreen.classList.add('hide');
-        setTimeout(() => { splashScreen.style.display = 'none'; }, 800);
-      }, totalDur + 500);
-    }
-
-    async function loadSplashSettings() {
-      try {
-        const doc = await db.collection('settings').doc('splash').get();
-        if (doc.exists) {
-          const data = doc.data();
-          splashSettings = {
-            type: data.type || 'none',
-            url: data.url || '',
-            title: data.title || 'RYEDZ',
-            subtitle: data.subtitle || 'Your Music, Your Vibe',
-            accentColor: data.accentColor || '#a78bfa',
-            duration: data.duration || 5,
-            icon: data.icon || 'fa-solid fa-headphones'
-          };
-          splashType.value = splashSettings.type;
-          splashUrlInput.value = splashSettings.url || '';
-          splashTitleInput.value = splashSettings.title || 'RYEDZ';
-          splashSubInput.value = splashSettings.subtitle || 'Your Music, Your Vibe';
-          splashColorInput.value = splashSettings.accentColor || '#a78bfa';
-          splashDurationInput.value = splashSettings.duration || 5;
-          splashIconInput.value = splashSettings.icon || 'fa-solid fa-headphones';
-          applySplashSettings(splashSettings);
-        } else {
-          await db.collection('settings').doc('splash').set({
-            type: 'none',
-            url: '',
-            title: 'RYEDZ',
-            subtitle: 'Your Music, Your Vibe',
-            accentColor: '#a78bfa',
-            duration: 5,
-            icon: 'fa-solid fa-headphones',
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-          applySplashSettings(splashSettings);
-        }
-      } catch (e) {
-        console.warn('Gagal load splash:', e);
-        applySplashSettings(splashSettings);
-      }
-    }
-
-    // ============================================================
-    //  SPLASH UPLOAD HANDLERS
-    // ============================================================
-    splashFileInput.addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const isImage = file.type.startsWith('image/');
-      const isVideo = file.type === 'video/mp4';
-
-      if (!isImage && !isVideo) {
-        alert('Hanya support gambar (JPG, PNG, GIF) atau video MP4!');
-        e.target.value = '';
-        return;
-      }
-
-      if (file.size > 10 * 1024 * 1024) {
-        alert('File terlalu besar! Maksimal 10MB.');
-        e.target.value = '';
-        return;
-      }
-
-      const storagePath = `splash/${Date.now()}_${file.name}`;
-      const storageRef = storage.ref(storagePath);
-
-      splashSettingsStatus.textContent = '⏳ Uploading...';
-      splashSettingsStatus.className = 'status-msg';
-
-      try {
-        const snapshot = await storageRef.put(file);
-        const downloadUrl = await snapshot.ref.getDownloadURL();
-
-        splashUrlInput.value = downloadUrl;
-        splashType.value = isImage ? 'image' : 'video';
-
-        // Preview langsung
-        const data = {
-          type: splashType.value,
-          url: downloadUrl,
-          title: splashTitleInput.value.trim() || 'RYEDZ',
-          subtitle: splashSubInput.value.trim() || 'Your Music, Your Vibe',
-          accentColor: splashColorInput.value || '#a78bfa',
-          duration: parseInt(splashDurationInput.value) || 5,
-          icon: splashIconInput.value.trim() || 'fa-solid fa-headphones'
-        };
-        applySplashSettings(data);
-
-        splashSettingsStatus.textContent = '✅ File berhasil diupload! Klik Simpan untuk menyimpan.';
-        splashSettingsStatus.className = 'status-msg success';
-      } catch (err) {
-        console.error(err);
-        splashSettingsStatus.textContent = '❌ Gagal upload: ' + err.message;
-        splashSettingsStatus.className = 'status-msg error';
-      }
-    });
-
-    // Preview button
-    previewSplashBtn.addEventListener('click', () => {
-      const data = {
-        type: splashType.value,
-        url: splashUrlInput.value.trim() || splashFileInput.files[0] ? URL.createObjectURL(splashFileInput.files[0]) :
-          '',
-        title: splashTitleInput.value.trim() || 'RYEDZ',
-        subtitle: splashSubInput.value.trim() || 'Your Music, Your Vibe',
-        accentColor: splashColorInput.value || '#a78bfa',
-        duration: parseInt(splashDurationInput.value) || 5,
-        icon: splashIconInput.value.trim() || 'fa-solid fa-headphones'
-      };
-      applySplashSettings(data);
-      splashSettingsStatus.textContent = '👁️ Pratinjau diperbarui (belum disimpan)';
-      splashSettingsStatus.className = 'status-msg';
-    });
-
-    // Live preview on input change
-    [splashType, splashUrlInput, splashTitleInput, splashSubInput, splashColorInput, splashDurationInput, splashIconInput]
-    .forEach(input => {
-      input.addEventListener('input', () => {
-        const data = {
-          type: splashType.value,
-          url: splashUrlInput.value.trim(),
-          title: splashTitleInput.value.trim() || 'RYEDZ',
-          subtitle: splashSubInput.value.trim() || 'Your Music, Your Vibe',
-          accentColor: splashColorInput.value || '#a78bfa',
-          duration: parseInt(splashDurationInput.value) || 5,
-          icon: splashIconInput.value.trim() || 'fa-solid fa-headphones'
-        };
-        applySplashSettings(data);
-      });
-    });
-
-    // Save splash settings
-    async function saveSplashSettings() {
-      const data = {
-        type: splashType.value,
-        url: splashUrlInput.value.trim(),
-        title: splashTitleInput.value.trim() || 'RYEDZ',
-        subtitle: splashSubInput.value.trim() || 'Your Music, Your Vibe',
-        accentColor: splashColorInput.value || '#a78bfa',
-        duration: parseInt(splashDurationInput.value) || 5,
-        icon: splashIconInput.value.trim() || 'fa-solid fa-headphones',
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
-
-      splashSettings = data;
-      applySplashSettings(data);
-
-      saveSplashBtn.disabled = true;
-      saveSplashBtn.innerHTML = '<span class="spinner"></span>';
-      splashSettingsStatus.textContent = '⏳ Menyimpan...';
-      splashSettingsStatus.className = 'status-msg';
-
-      try {
-        await db.collection('settings').doc('splash').set(data, { merge: true });
-        splashSettingsStatus.textContent = '✅ Pengaturan splash disimpan!';
-        splashSettingsStatus.className = 'status-msg success';
-      } catch (err) {
-        splashSettingsStatus.textContent = '❌ Gagal: ' + err.message;
-        splashSettingsStatus.className = 'status-msg error';
-      } finally {
-        saveSplashBtn.disabled = false;
-        saveSplashBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
-      }
+        setTimeout(() => { splashScreen.style.display = 'none'; }, 600);
+      }, 5500);
     }
 
     // ============================================================
@@ -1923,15 +1613,25 @@
         try {
           const doc = await db.collection('users').doc(user.uid).get();
           if (doc.exists) {
-            userRole = doc.data().role || 'user';
+            const data = doc.data();
+            userRole = data.role || 'user';
+            // Update user display
+            updateUserDisplay(data);
           } else {
             await db.collection('users').doc(user.uid).set({
               email: user.email,
               role: 'user',
               displayName: user.displayName || user.email?.split('@')[0] || 'User',
+              tier: 'c',
+              verified: false,
+              glowing: false,
+              promptCount: 0,
+              totalRating: 0,
               createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
             userRole = 'user';
+            updateUserDisplay({ displayName: user.displayName || user.email?.split('@')[0] || 'User', tier: 'c',
+              verified: false, glowing: false });
           }
         } catch (e) {
           console.warn('Role error:', e);
@@ -1939,63 +1639,58 @@
         }
         authPage.style.display = 'none';
         appEl.style.display = 'block';
-        await loadSplashSettings();
-        setTimeout(() => {
-          splashScreen.style.display = 'flex';
-          showSplash();
-        }, 100);
+        setTimeout(showSplash, 100);
         initApp();
       } else {
         authPage.style.display = 'flex';
         appEl.style.display = 'none';
         splashScreen.style.display = 'none';
-        resetPlayer();
       }
     });
 
     logoutBtn.addEventListener('click', () => {
       auth.signOut();
-      resetPlayer();
     });
 
     // ============================================================
-    //  INIT APP
+    //  USER DISPLAY
     // ============================================================
-    function initApp() {
-      const displayName = currentUser.displayName || currentUser.email?.split('@')[0] || 'User';
+    function updateUserDisplay(data) {
+      const displayName = data.displayName || 'User';
       userName.textContent = displayName;
-      greetingName.textContent = displayName;
 
       if (userRole === 'admin') {
         userBadge.textContent = 'Admin';
         userBadge.className = 'badge badge-admin';
         adminTabBtn.style.display = 'inline-block';
-        $('splashSettingsPanel').style.display = 'block';
-        splashType.value = splashSettings.type || 'none';
-        splashUrlInput.value = splashSettings.url || '';
-        splashTitleInput.value = splashSettings.title || 'RYEDZ';
-        splashSubInput.value = splashSettings.subtitle || 'Your Music, Your Vibe';
-        splashColorInput.value = splashSettings.accentColor || '#a78bfa';
-        splashDurationInput.value = splashSettings.duration || 5;
-        splashIconInput.value = splashSettings.icon || 'fa-solid fa-headphones';
-        applySplashSettings(splashSettings);
-
-        // Admin: save splash
-        saveSplashBtn.addEventListener('click', saveSplashSettings);
-
-        // Admin: extract YouTube
-        extractBtn.addEventListener('click', handleExtract);
-
-        // Admin: upload MP3
-        uploadManualBtn.addEventListener('click', handleManualUpload);
-
       } else {
         userBadge.textContent = 'User';
         userBadge.className = 'badge badge-user';
         adminTabBtn.style.display = 'none';
-        $('splashSettingsPanel').style.display = 'none';
       }
 
+      // Badges
+      let badgesHtml = '';
+      if (data.verified) {
+        badgesHtml += `<span class="verified-badge" title="Verified"><i class="fas fa-check-circle"></i></span>`;
+      }
+      if (data.glowing) {
+        badgesHtml += `<span class="tier-badge glow-text" style="font-size:12px;color:var(--accent);">✦</span>`;
+      }
+      if (data.tier === 'a') {
+        badgesHtml += `<span class="tier-badge tier-a" title="Tier A - Legend">👑</span>`;
+      } else if (data.tier === 'b') {
+        badgesHtml += `<span class="tier-badge tier-b" title="Tier B - Pro">⭐</span>`;
+      } else if (data.tier === 'c') {
+        badgesHtml += `<span class="tier-badge tier-c" title="Tier C - Rookie">🌱</span>`;
+      }
+      userBadges.innerHTML = badgesHtml;
+    }
+
+    // ============================================================
+    //  INIT APP
+    // ============================================================
+    function initApp() {
       // Tab switching
       document.querySelectorAll('.tab-nav button').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -2008,425 +1703,601 @@
         });
       });
 
-      loadSongs();
-      setupPlayerListeners();
+      // Load data
+      loadPrompts();
+      loadUsers();
+      loadActivities();
+
+      // Admin: if admin, load admin data
+      if (userRole === 'admin') {
+        adminTabBtn.style.display = 'inline-block';
+        loadAdminStats();
+      }
+
+      // Upload prompt
+      uploadPromptBtn.addEventListener('click', handleUploadPrompt);
+
+      // Search
+      searchBtn.addEventListener('click', () => {
+        searchQuery = searchInput.value.trim().toLowerCase();
+        renderPrompts();
+      });
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          searchQuery = searchInput.value.trim().toLowerCase();
+          renderPrompts();
+        }
+      });
+
+      // Filters
+      document.querySelectorAll('.prompt-filters button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.prompt-filters button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          renderPrompts();
+        });
+      });
+
+      // Modal
+      closeModalBtn.addEventListener('click', () => { promptModal.classList.remove('show'); });
+      promptModal.addEventListener('click', (e) => {
+        if (e.target === promptModal) promptModal.classList.remove('show');
+      });
+      copyPromptBtn.addEventListener('click', () => {
+        const text = modalPrompt.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          copyPromptBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+          setTimeout(() => {
+            copyPromptBtn.innerHTML = '<i class="fas fa-copy"></i> Salin Prompt';
+          }, 2000);
+        }).catch(() => {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          copyPromptBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+          setTimeout(() => {
+            copyPromptBtn.innerHTML = '<i class="fas fa-copy"></i> Salin Prompt';
+          }, 2000);
+        });
+      });
+
+      // Rating stars
+      modalStars.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', async () => {
+          const value = parseInt(star.dataset.value);
+          if (!currentPromptId) return;
+          if (!currentUser) {
+            alert('Login dulu untuk memberi rating!');
+            return;
+          }
+          await handleRating(currentPromptId, value);
+        });
+      });
     }
 
     // ============================================================
-    //  LOAD SONGS (REALTIME)
+    //  LOAD PROMPTS
     // ============================================================
-    function loadSongs() {
-      db.collection('songs')
-        .orderBy('addedAt', 'desc')
+    function loadPrompts() {
+      db.collection('prompts')
+        .orderBy('createdAt', 'desc')
         .onSnapshot(snapshot => {
-          allSongs = [];
+          allPrompts = [];
           snapshot.forEach(doc => {
-            allSongs.push({ id: doc.id, ...doc.data() });
+            allPrompts.push({ id: doc.id, ...doc.data() });
           });
-          renderAll();
-          updateSongCount();
-          if (allSongs.length === 0 && currentSongIndex >= 0) resetPlayer();
+          renderPrompts();
+          renderAdminPromptList();
+          if (userRole === 'admin') {
+            adminTotalPrompts.textContent = allPrompts.length;
+          }
         }, err => console.error('Firestore error:', err));
     }
 
-    function renderAll() {
-      renderHome();
-      renderLibrary();
-      renderAdminList();
+    // ============================================================
+    //  LOAD USERS
+    // ============================================================
+    function loadUsers() {
+      db.collection('users')
+        .onSnapshot(snapshot => {
+          allUsers = {};
+          snapshot.forEach(doc => {
+            allUsers[doc.id] = { id: doc.id, ...doc.data() };
+          });
+          renderPrompts();
+          renderAdminUserList();
+          if (userRole === 'admin') {
+            adminTotalUsers.textContent = Object.keys(allUsers).length;
+          }
+        }, err => console.error('Users error:', err));
     }
 
-    function renderHome() {
-      if (allSongs.length === 0) {
-        homeGrid.innerHTML =
-          `<div class="empty-state" style="grid-column:1/-1;"><i class="fas fa-headphones"></i><h3>Belum ada lagu</h3><p>Admin dapat menambahkan lagu melalui panel Admin.</p></div>`;
-        return;
-      }
-      let html = '';
-      allSongs.slice(0, 12).forEach((song, idx) => { html += createSongCard(song, idx); });
-      homeGrid.innerHTML = html;
-      attachCardEvents(homeGrid);
+    // ============================================================
+    //  LOAD ACTIVITIES
+    // ============================================================
+    function loadActivities() {
+      db.collection('activities')
+        .orderBy('timestamp', 'desc')
+        .limit(50)
+        .onSnapshot(snapshot => {
+          const activities = [];
+          snapshot.forEach(doc => {
+            activities.push({ id: doc.id, ...doc.data() });
+          });
+          renderAdminActivities(activities);
+          if (userRole === 'admin') {
+            adminTotalActivities.textContent = activities.length;
+          }
+        }, err => console.error('Activities error:', err));
     }
 
-    function renderLibrary() {
-      if (allSongs.length === 0) {
-        libraryGrid.innerHTML =
-          `<div class="empty-state" style="grid-column:1/-1;"><i class="fas fa-inbox"></i><h3>Library kosong</h3><p>Tambahkan lagu melalui panel Admin.</p></div>`;
-        return;
-      }
-      let html = '';
-      allSongs.forEach((song, idx) => { html += createSongCard(song, idx); });
-      libraryGrid.innerHTML = html;
-      attachCardEvents(libraryGrid);
+    // ============================================================
+    //  LOAD ADMIN STATS
+    // ============================================================
+    function loadAdminStats() {
+      // Total ratings
+      db.collection('ratings')
+        .get()
+        .then(snapshot => {
+          adminTotalRatings.textContent = snapshot.size;
+        })
+        .catch(() => {});
     }
 
-    function renderAdminList() {
-      if (userRole !== 'admin') return;
-      if (allSongs.length === 0) {
-        adminSongList.innerHTML =
-          `<div class="empty-state" style="padding:30px 20px;"><i class="fas fa-music" style="font-size:28px;"></i><p style="margin-top:4px;">Belum ada lagu.</p></div>`;
+    // ============================================================
+    //  RENDER PROMPTS
+    // ============================================================
+    function renderPrompts() {
+      let filtered = allPrompts;
+
+      // Filter by AI
+      if (currentFilter !== 'all') {
+        filtered = filtered.filter(p => p.ai === currentFilter);
+      }
+
+      // Search
+      if (searchQuery) {
+        filtered = filtered.filter(p =>
+          (p.title || '').toLowerCase().includes(searchQuery) ||
+          (p.category || '').toLowerCase().includes(searchQuery) ||
+          (p.description || '').toLowerCase().includes(searchQuery) ||
+          (p.ai || '').toLowerCase().includes(searchQuery) ||
+          (p.content || '').toLowerCase().includes(searchQuery)
+        );
+      }
+
+      if (filtered.length === 0) {
+        promptGrid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <i class="fas fa-skull"></i>
+            <h3>Tidak ada prompt</h3>
+            <p>${searchQuery ? 'Tidak ditemukan dengan kata kunci tersebut.' : 'Belum ada prompt yang ditambahkan.'}</p>
+          </div>
+        `;
+        promptCount.textContent = '0 prompt';
         return;
       }
+
       let html = '';
-      allSongs.forEach(song => {
+      filtered.forEach(prompt => {
+        const aiLabel = prompt.ai.charAt(0).toUpperCase() + prompt.ai.slice(1);
+        const user = allUsers[prompt.uploadedBy] || { displayName: 'Unknown', tier: 'c', verified: false, glowing: false };
+        const tierEmoji = user.tier === 'a' ? '👑' : user.tier === 'b' ? '⭐' : '🌱';
+        const verifiedIcon = user.verified ? '<i class="fas fa-check-circle verified-icon"></i>' : '';
+        const glowClass = user.glowing ? 'glow-name' : '';
+        const rating = prompt.rating || 0;
+        const ratingCount = prompt.ratingCount || 0;
+
         html += `
-          <div class="song-item">
-            <div class="info">
-              <img src="${song.thumbnail || 'https://via.placeholder.com/40/1a1530/8b7bf7?text=🎵'}" alt="thumb" />
-              <div class="text">
-                <div class="t">${escapeHtml(song.title || 'Untitled')}</div>
-                <div class="a">${escapeHtml(song.artist || 'Unknown')} · ${song.duration || '0:00'}</div>
-              </div>
+          <div class="prompt-card" data-id="${prompt.id}">
+            <div class="header">
+              <div class="title">${escapeHtml(prompt.title || 'Untitled')}</div>
+              <span class="badge-ai ${prompt.ai}">${aiLabel}</span>
             </div>
-            <button class="del-btn" data-id="${song.id}"><i class="fas fa-trash-alt"></i> Hapus</button>
+            <div class="prompt-preview">${escapeHtml(prompt.content || '').substring(0, 150)}${(prompt.content || '').length > 150 ? '...' : ''}</div>
+            <div class="meta">
+              <span class="user-uploader">
+                ${tierEmoji}
+                <span class="${glowClass}">${escapeHtml(user.displayName || 'Unknown')}</span>
+                ${verifiedIcon}
+              </span>
+              <span><i class="fas fa-tag"></i> ${escapeHtml(prompt.category || 'General')}</span>
+              <span class="rating">
+                <span class="stars">${'★'.repeat(Math.round(rating))}${'☆'.repeat(5 - Math.round(rating))}</span>
+                (${ratingCount})
+              </span>
+            </div>
           </div>
         `;
       });
-      adminSongList.innerHTML = html;
-      adminSongList.querySelectorAll('.del-btn').forEach(btn => {
+      promptGrid.innerHTML = html;
+      promptCount.textContent = filtered.length + ' prompt';
+
+      // Click to open modal
+      promptGrid.querySelectorAll('.prompt-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = card.dataset.id;
+          const prompt = allPrompts.find(p => p.id === id);
+          if (prompt) openModal(prompt);
+        });
+      });
+    }
+
+    // ============================================================
+    //  OPEN MODAL
+    // ============================================================
+    function openModal(prompt) {
+      currentPromptId = prompt.id;
+      modalTitle.textContent = prompt.title || 'Untitled';
+      const aiLabel = prompt.ai.charAt(0).toUpperCase() + prompt.ai.slice(1);
+      modalAi.textContent = `🎯 ${aiLabel} · ${prompt.category || 'General'}`;
+
+      const user = allUsers[prompt.uploadedBy] || { displayName: 'Unknown', tier: 'c', verified: false, glowing: false };
+      const tierEmoji = user.tier === 'a' ? '👑' : user.tier === 'b' ? '⭐' : '🌱';
+      const verifiedIcon = user.verified ? ' ✓✓' : '';
+      const glowClass = user.glowing ? 'glow-text' : '';
+      modalUploader.textContent = `Uploaded by: ${tierEmoji} ${user.displayName || 'Unknown'}${verifiedIcon}`;
+
+      modalDescription.textContent = prompt.description || 'Tidak ada deskripsi.';
+      modalPrompt.textContent = prompt.content || 'Kosong';
+      promptModal.classList.add('show');
+
+      // Update rating stars
+      const rating = prompt.rating || 0;
+      modalStars.querySelectorAll('.star').forEach(star => {
+        const val = parseInt(star.dataset.value);
+        star.classList.toggle('active', val <= Math.round(rating));
+      });
+      const ratingCount = prompt.ratingCount || 0;
+      modalRatingLabel.textContent = ratingCount > 0 ?
+        `${rating.toFixed(1)} (${ratingCount} rating)` :
+        'Belum ada rating';
+    }
+
+    // ============================================================
+    //  HANDLE RATING
+    // ============================================================
+    async function handleRating(promptId, value) {
+      try {
+        const promptRef = db.collection('prompts').doc(promptId);
+        const promptDoc = await promptRef.get();
+        const promptData = promptDoc.data();
+
+        // Check if user already rated
+        const ratingRef = db.collection('ratings');
+        const existing = await ratingRef
+          .where('promptId', '==', promptId)
+          .where('userId', '==', currentUser.uid)
+          .get();
+
+        let newRating = (promptData.rating || 0) * (promptData.ratingCount || 0);
+        let newCount = promptData.ratingCount || 0;
+
+        if (!existing.empty) {
+          // Update existing rating
+          const oldVal = existing.docs[0].data().value;
+          newRating = newRating - oldVal + value;
+          await existing.docs[0].ref.update({ value, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+        } else {
+          // New rating
+          newRating += value;
+          newCount += 1;
+          await ratingRef.add({
+            promptId,
+            userId: currentUser.uid,
+            value,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
+
+        const avg = newCount > 0 ? newRating / newCount : 0;
+        await promptRef.update({
+          rating: avg,
+          ratingCount: newCount
+        });
+
+        // Log activity
+        await db.collection('activities').add({
+          userId: currentUser.uid,
+          userName: currentUser.displayName || currentUser.email?.split('@')[0] || 'User',
+          action: `memberi rating ${value}★ pada prompt "${promptData.title || 'Untitled'}"`,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Update modal
+        const updatedPrompt = allPrompts.find(p => p.id === promptId);
+        if (updatedPrompt) {
+          updatedPrompt.rating = avg;
+          updatedPrompt.ratingCount = newCount;
+          const rounded = Math.round(avg);
+          modalStars.querySelectorAll('.star').forEach(star => {
+            const val = parseInt(star.dataset.value);
+            star.classList.toggle('active', val <= rounded);
+          });
+          modalRatingLabel.textContent = `${avg.toFixed(1)} (${newCount} rating)`;
+        }
+
+      } catch (err) {
+        console.error('Rating error:', err);
+        alert('Gagal memberi rating: ' + err.message);
+      }
+    }
+
+    // ============================================================
+    //  HANDLE UPLOAD PROMPT
+    // ============================================================
+    async function handleUploadPrompt() {
+      const title = uploadPromptTitle.value.trim();
+      const ai = uploadPromptAi.value;
+      const category = uploadPromptCategory.value.trim() || 'General';
+      const description = uploadPromptDescription.value.trim();
+      const content = uploadPromptContent.value.trim();
+
+      if (!title) {
+        uploadPromptStatus.textContent = '⚠️ Judul prompt harus diisi.';
+        uploadPromptStatus.className = 'status error';
+        return;
+      }
+      if (!content) {
+        uploadPromptStatus.textContent = '⚠️ Isi prompt harus diisi.';
+        uploadPromptStatus.className = 'status error';
+        return;
+      }
+
+      uploadPromptBtn.disabled = true;
+      uploadPromptBtn.innerHTML = '<span class="spinner"></span>';
+      uploadPromptStatus.textContent = '⏳ Uploading...';
+      uploadPromptStatus.className = 'status';
+
+      try {
+        const promptData = {
+          title,
+          ai,
+          category,
+          description: description || '',
+          content,
+          uploadedBy: currentUser.uid,
+          rating: 0,
+          ratingCount: 0,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        const docRef = await db.collection('prompts').add(promptData);
+
+        // Update user's prompt count
+        await db.collection('users').doc(currentUser.uid).update({
+          promptCount: firebase.firestore.FieldValue.increment(1)
+        });
+
+        // Log activity
+        await db.collection('activities').add({
+          userId: currentUser.uid,
+          userName: currentUser.displayName || currentUser.email?.split('@')[0] || 'User',
+          action: `upload prompt "${title}"`,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        uploadPromptStatus.textContent = '✅ Prompt berhasil diupload!';
+        uploadPromptStatus.className = 'status success';
+        uploadPromptTitle.value = '';
+        uploadPromptCategory.value = '';
+        uploadPromptDescription.value = '';
+        uploadPromptContent.value = '';
+
+        // Update user tier based on prompt count
+        await updateUserTier(currentUser.uid);
+
+      } catch (err) {
+        console.error(err);
+        uploadPromptStatus.textContent = '❌ Gagal: ' + err.message;
+        uploadPromptStatus.className = 'status error';
+      } finally {
+        uploadPromptBtn.disabled = false;
+        uploadPromptBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Prompt';
+      }
+    }
+
+    // ============================================================
+    //  UPDATE USER TIER
+    // ============================================================
+    async function updateUserTier(userId) {
+      try {
+        const userDoc = await db.collection('users').doc(userId).get();
+        const userData = userDoc.data();
+        const count = userData.promptCount || 0;
+
+        let tier = 'c';
+        if (count >= 20) tier = 'a';
+        else if (count >= 10) tier = 'b';
+
+        if (tier !== userData.tier) {
+          await db.collection('users').doc(userId).update({ tier });
+        }
+      } catch (err) {
+        console.warn('Tier update error:', err);
+      }
+    }
+
+    // ============================================================
+    //  ADMIN: RENDER USER LIST
+    // ============================================================
+    function renderAdminUserList() {
+      if (userRole !== 'admin') return;
+      const users = Object.values(allUsers);
+      if (users.length === 0) {
+        adminUserList.innerHTML = `
+          <div class="empty-state" style="padding:20px;">
+            <i class="fas fa-users" style="font-size:24px;"></i>
+            <p style="margin-top:4px;">Belum ada user.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      users.forEach(user => {
+        const tierEmoji = user.tier === 'a' ? '👑' : user.tier === 'b' ? '⭐' : '🌱';
+        const verifiedIcon = user.verified ? '✓' : '✗';
+        const glowIcon = user.glowing ? '✦' : '·';
+        html += `
+          <div class="user-item">
+            <div class="info">
+              <div class="text">
+                <div class="t">
+                  ${tierEmoji} ${escapeHtml(user.displayName || 'Unknown')}
+                  ${user.verified ? '<span style="color:#4488ff;"> ✓✓</span>' : ''}
+                  ${user.glowing ? '<span style="color:var(--accent);" class="glow-text"> ✦</span>' : ''}
+                  <span style="font-size:11px;color:var(--text-muted);margin-left:8px;">
+                    ${user.promptCount || 0} prompt · ${user.totalRating || 0} rating
+                  </span>
+                </div>
+                <div class="a">${user.email || ''} · Tier ${user.tier?.toUpperCase() || 'C'}</div>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="${user.verified ? 'active' : ''}" data-user="${user.id}" data-action="verify">
+                <i class="fas fa-check-circle"></i> Verify
+              </button>
+              <button class="${user.glowing ? 'active' : ''}" data-user="${user.id}" data-action="glow">
+                <i class="fas fa-star"></i> Glow
+              </button>
+              <button data-user="${user.id}" data-action="tier-a" class="${user.tier === 'a' ? 'active' : ''}">👑 A</button>
+              <button data-user="${user.id}" data-action="tier-b" class="${user.tier === 'b' ? 'active' : ''}">⭐ B</button>
+              <button data-user="${user.id}" data-action="tier-c" class="${user.tier === 'c' ? 'active' : ''}">🌱 C</button>
+            </div>
+          </div>
+        `;
+      });
+      adminUserList.innerHTML = html;
+
+      // Admin actions
+      adminUserList.querySelectorAll('.actions button').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const userId = btn.dataset.user;
+          const action = btn.dataset.action;
+          const user = allUsers[userId];
+          if (!user) return;
+
+          try {
+            let updateData = {};
+            if (action === 'verify') {
+              updateData.verified = !user.verified;
+            } else if (action === 'glow') {
+              updateData.glowing = !user.glowing;
+            } else if (action === 'tier-a') {
+              updateData.tier = user.tier === 'a' ? 'c' : 'a';
+            } else if (action === 'tier-b') {
+              updateData.tier = user.tier === 'b' ? 'c' : 'b';
+            } else if (action === 'tier-c') {
+              updateData.tier = 'c';
+            }
+
+            await db.collection('users').doc(userId).update(updateData);
+
+            // Log activity
+            await db.collection('activities').add({
+              userId: currentUser.uid,
+              userName: currentUser.displayName || 'Admin',
+              action: `update user ${user.displayName}: ${action}`,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+          } catch (err) {
+            alert('Gagal update user: ' + err.message);
+          }
+        });
+      });
+    }
+
+    // ============================================================
+    //  ADMIN: RENDER PROMPT LIST
+    // ============================================================
+    function renderAdminPromptList() {
+      if (userRole !== 'admin') return;
+      if (allPrompts.length === 0) {
+        adminPromptList.innerHTML = `
+          <div class="empty-state" style="padding:20px;">
+            <i class="fas fa-skull" style="font-size:24px;"></i>
+            <p style="margin-top:4px;">Belum ada prompt.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      allPrompts.forEach(prompt => {
+        const user = allUsers[prompt.uploadedBy] || { displayName: 'Unknown' };
+        const aiLabel = prompt.ai.charAt(0).toUpperCase() + prompt.ai.slice(1);
+        html += `
+          <div class="prompt-item">
+            <div class="info">
+              <div class="text">
+                <div class="t">${escapeHtml(prompt.title || 'Untitled')}</div>
+                <div class="a">${aiLabel} · ${escapeHtml(prompt.category || 'General')} · by ${escapeHtml(user.displayName || 'Unknown')}</div>
+              </div>
+            </div>
+            <button class="del-btn" data-id="${prompt.id}"><i class="fas fa-trash-alt"></i> Hapus</button>
+          </div>
+        `;
+      });
+      adminPromptList.innerHTML = html;
+
+      adminPromptList.querySelectorAll('.del-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
           const id = btn.dataset.id;
-          if (confirm('Yakin ingin menghapus lagu ini?')) {
+          if (confirm('Yakin ingin menghapus prompt ini?')) {
             try {
-              await db.collection('songs').doc(id).delete();
+              await db.collection('prompts').doc(id).delete();
+              // Log activity
+              await db.collection('activities').add({
+                userId: currentUser.uid,
+                userName: currentUser.displayName || 'Admin',
+                action: `menghapus prompt`,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+              });
             } catch (e) { alert('Gagal: ' + e.message); }
           }
         });
       });
     }
 
-    function createSongCard(song, idx) {
-      const thumb = song.thumbnail || 'https://via.placeholder.com/180/1a1530/8b7bf7?text=🎵';
-      const title = escapeHtml(song.title || 'Untitled');
-      const artist = escapeHtml(song.artist || 'Unknown');
-      const dur = song.duration || '0:00';
-      return `
-        <div class="song-card" data-index="${idx}" data-id="${song.id}">
-          <img class="thumb" src="${thumb}" alt="${title}" loading="lazy" />
-          <div class="title">${title}</div>
-          <div class="artist">${artist}</div>
-          <div class="duration">${dur}</div>
-          <button class="play-btn" data-index="${idx}"><i class="fas fa-play"></i></button>
-        </div>
-      `;
-    }
-
-    function attachCardEvents(container) {
-      container.querySelectorAll('.song-card').forEach(card => {
-        const idx = parseInt(card.dataset.index);
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('.play-btn')) return;
-          playSong(idx);
-        });
-        const btn = card.querySelector('.play-btn');
-        if (btn) {
-          btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const idx = parseInt(btn.dataset.index);
-            playSong(idx);
-          });
-        }
-      });
-    }
-
-    function updateSongCount() {
-      songCount.textContent = allSongs.length + ' lagu';
-    }
-
     // ============================================================
-    //  PLAYER
+    //  ADMIN: RENDER ACTIVITIES
     // ============================================================
-    function playSong(index) {
-      if (index < 0 || index >= allSongs.length) return;
-      const song = allSongs[index];
-      if (!song.audioUrl) { alert('Audio tidak tersedia.'); return; }
-      if (currentSongIndex === index && audio.src) { togglePlay(); return; }
-
-      currentSongIndex = index;
-      audio.src = song.audioUrl;
-      audio.load();
-      playerThumb.src = song.thumbnail || 'https://via.placeholder.com/52/1a1530/8b7bf7?text=🎵';
-      playerTitle.textContent = song.title || 'Untitled';
-      playerArtist.textContent = song.artist || 'Unknown';
-      player.classList.remove('hidden');
-
-      const playFn = () => {
-        audio.play().then(() => { isPlaying = true;
-          updatePlayBtn();
-          updateProgress(); }).catch(() => { isPlaying = false;
-          updatePlayBtn(); });
-      };
-      audio.addEventListener('loadedmetadata', () => {
-        totalTimeEl.textContent = formatTime(audio.duration);
-        playFn();
-      }, { once: true });
-      if (audio.readyState >= 2) {
-        totalTimeEl.textContent = formatTime(audio.duration);
-        playFn();
-      }
-      updatePlayBtn();
-    }
-
-    function togglePlay() {
-      if (!audio.src) return;
-      if (isPlaying) { audio.pause();
-        isPlaying = false; } else { audio.play().catch(() => {}); isPlaying = true; }
-      updatePlayBtn();
-    }
-
-    function updatePlayBtn() {
-      playToggleBtn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-    }
-
-    function updateProgress() {
-      if (!audio.src) return;
-      const percent = (audio.currentTime / audio.duration) * 100 || 0;
-      progressFill.style.width = Math.min(percent, 100) + '%';
-      currentTimeEl.textContent = formatTime(audio.currentTime);
-      if (isPlaying) requestAnimationFrame(updateProgress);
-      else setTimeout(() => { if (!isPlaying) updateProgress(); }, 500);
-    }
-
-    audio.addEventListener('timeupdate', () => {
-      if (!isDragging) {
-        const percent = (audio.currentTime / audio.duration) * 100 || 0;
-        progressFill.style.width = Math.min(percent, 100) + '%';
-        currentTimeEl.textContent = formatTime(audio.currentTime);
-      }
-    });
-    audio.addEventListener('ended', () => { isPlaying = false;
-      updatePlayBtn();
-      nextSong(); });
-    audio.addEventListener('error', () => { isPlaying = false;
-      updatePlayBtn(); });
-
-    progressBar.addEventListener('mousedown', (e) => { isDragging = true;
-      seek(e); });
-    document.addEventListener('mousemove', (e) => { if (isDragging) seek(e); });
-    document.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
-        if (audio.src && audio.duration) {
-          const rect = progressBar.getBoundingClientRect();
-          const x = (event.clientX - rect.left) / rect.width;
-          audio.currentTime = x * audio.duration;
-        }
-      }
-    });
-
-    function seek(e) {
-      if (!audio.src || !audio.duration) return;
-      const rect = progressBar.getBoundingClientRect();
-      const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      progressFill.style.width = (x * 100) + '%';
-      currentTimeEl.textContent = formatTime(x * audio.duration);
-    }
-
-    function prevSong() { if (allSongs.length === 0) return;
-      let idx = currentSongIndex - 1; if (idx < 0) idx = allSongs.length - 1;
-      playSong(idx); }
-
-    function nextSong() { if (allSongs.length === 0) return;
-      let idx = currentSongIndex + 1; if (idx >= allSongs.length) idx = 0;
-      playSong(idx); }
-
-    prevBtn.addEventListener('click', prevSong);
-    nextBtn.addEventListener('click', nextSong);
-    playToggleBtn.addEventListener('click', togglePlay);
-
-    function resetPlayer() {
-      audio.pause();
-      audio.src = '';
-      isPlaying = false;
-      currentSongIndex = -1;
-      player.classList.add('hidden');
-      updatePlayBtn();
-      progressFill.style.width = '0%';
-      currentTimeEl.textContent = '0:00';
-      totalTimeEl.textContent = '0:00';
-      if (sleepTimeout) { clearTimeout(sleepTimeout);
-        sleepTimeout = null;
-        sleepMinutes = 0;
-        sleepBtn.classList.remove('sleep-active'); }
-    }
-
-    function setupPlayerListeners() {
-      document.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT') return;
-        if (e.code === 'Space') { e.preventDefault();
-          togglePlay(); }
-        if (e.code === 'ArrowRight') { if (audio.src) audio.currentTime = Math.min(audio.currentTime + 10, audio
-          .duration); }
-        if (e.code === 'ArrowLeft') { if (audio.src) audio.currentTime = Math.max(audio.currentTime - 10, 0); }
-      });
-    }
-
-    // ============================================================
-    //  SLEEP TIMER
-    // ============================================================
-    sleepBtn.addEventListener('click', () => { sleepModal.classList.toggle('show'); });
-    sleepCloseBtn.addEventListener('click', () => { sleepModal.classList.remove('show'); });
-    sleepModal.addEventListener('click', (e) => { if (e.target === sleepModal) sleepModal.classList.remove('show'); });
-
-    sleepOptions.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        sleepOptions.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const mins = parseInt(btn.dataset.minutes);
-        setSleepTimer(mins);
-        sleepModal.classList.remove('show');
-      });
-    });
-
-    function setSleepTimer(minutes) {
-      if (sleepTimeout) { clearTimeout(sleepTimeout);
-        sleepTimeout = null;
-        sleepBtn.classList.remove('sleep-active'); }
-      sleepMinutes = minutes;
-      if (minutes > 0) {
-        sleepBtn.classList.add('sleep-active');
-        sleepTimeout = setTimeout(() => {
-          audio.pause();
-          isPlaying = false;
-          updatePlayBtn();
-          sleepBtn.classList.remove('sleep-active');
-          sleepTimeout = null;
-          sleepMinutes = 0;
-          sleepOptions.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-          sleepOptions.querySelector('[data-minutes="0"]')?.classList.add('active');
-        }, minutes * 60 * 1000);
-      } else {
-        sleepBtn.classList.remove('sleep-active');
-      }
-    }
-
-    // ============================================================
-    //  EXTRACT FROM YOUTUBE (FREE API)
-    // ============================================================
-    async function handleExtract() {
-      const url = youtubeUrlInput.value.trim();
-      if (!url) {
-        extractStatus.textContent = '⚠️ Masukkan URL YouTube.';
-        extractStatus.className = 'status error';
+    function renderAdminActivities(activities) {
+      if (userRole !== 'admin') return;
+      if (activities.length === 0) {
+        adminActivityList.innerHTML = `
+          <div class="empty-state" style="padding:20px;">
+            <i class="fas fa-clock" style="font-size:24px;"></i>
+            <p style="margin-top:4px;">Belum ada aktivitas.</p>
+          </div>
+        `;
         return;
       }
-      const videoId = extractVideoId(url);
-      if (!videoId) {
-        extractStatus.textContent = '⚠️ URL YouTube tidak valid.';
-        extractStatus.className = 'status error';
-        return;
-      }
-      extractBtn.disabled = true;
-      extractBtn.innerHTML = '<span class="spinner"></span>';
-      extractStatus.textContent = '⏳ Mengambil audio...';
-      extractStatus.className = 'status';
 
-      try {
-        const apiUrl = `https://api.vevioz.com/api/button/mp3/${videoId}`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (!data.success || !data.audio) {
-          throw new Error(data.msg || 'Gagal mengambil audio.');
-        }
-
-        const song = {
-          title: data.title || 'Untitled',
-          artist: data.artist || data.author || 'Unknown Artist',
-          album: data.album || 'Single',
-          duration: data.duration || '0:00',
-          youtubeId: videoId,
-          audioUrl: data.audio,
-          thumbnail: data.thumbnail || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
-          addedBy: currentUser.uid,
-          addedAt: firebase.firestore.FieldValue.serverTimestamp()
-        };
-        await db.collection('songs').add(song);
-
-        extractStatus.textContent = '✅ Lagu berhasil ditambahkan!';
-        extractStatus.className = 'status success';
-        youtubeUrlInput.value = '';
-      } catch (err) {
-        console.error(err);
-        extractStatus.textContent = '❌ Gagal: ' + err.message + '. Gunakan Upload MP3 Manual.';
-        extractStatus.className = 'status error';
-      } finally {
-        extractBtn.disabled = false;
-        extractBtn.innerHTML = '<i class="fas fa-cloud-download-alt"></i> Ekstrak';
-      }
-    }
-
-    function extractVideoId(url) {
-      const patterns = [
-        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([^&\?\/]+)/,
-        /youtube\.com\/shorts\/([^\/\?]+)/
-      ];
-      for (const p of patterns) {
-        const match = url.match(p);
-        if (match) return match[1];
-      }
-      return null;
-    }
-
-    // ============================================================
-    //  MANUAL UPLOAD MP3
-    // ============================================================
-    async function handleManualUpload() {
-      const file = mp3FileInput.files[0];
-      if (!file) {
-        uploadManualStatus.textContent = '⚠️ Pilih file MP3 terlebih dahulu.';
-        uploadManualStatus.style.color = '#f87171';
-        return;
-      }
-      const title = manualTitle.value.trim() || 'Untitled';
-      const artist = manualArtist.value.trim() || 'Unknown';
-      const thumb = manualThumb.value.trim() || '';
-
-      uploadManualBtn.disabled = true;
-      uploadManualBtn.innerHTML = '<span class="spinner"></span> Uploading...';
-      uploadManualStatus.textContent = '⏳ Mengupload MP3...';
-      uploadManualStatus.style.color = 'var(--text-secondary)';
-
-      try {
-        const storageRef = storage.ref('songs/' + Date.now() + '_' + file.name);
-        const snapshot = await storageRef.put(file);
-        const audioUrl = await snapshot.ref.getDownloadURL();
-
-        await db.collection('songs').add({
-          title,
-          artist,
-          audioUrl,
-          thumbnail: thumb || '',
-          duration: '0:00',
-          addedBy: currentUser.uid,
-          addedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        uploadManualStatus.textContent = '✅ Lagu berhasil diupload!';
-        uploadManualStatus.style.color = '#6ee7b7';
-        mp3FileInput.value = '';
-        manualTitle.value = '';
-        manualArtist.value = '';
-        manualThumb.value = '';
-      } catch (err) {
-        console.error(err);
-        uploadManualStatus.textContent = '❌ Gagal upload: ' + err.message;
-        uploadManualStatus.style.color = '#f87171';
-      } finally {
-        uploadManualBtn.disabled = false;
-        uploadManualBtn.innerHTML = '<i class="fas fa-upload"></i> Upload Lagu';
-      }
+      let html = '';
+      activities.forEach(activity => {
+        const time = activity.timestamp?.toDate?.() || new Date();
+        const timeStr = time.toLocaleString('id-ID', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' });
+        html += `
+          <div class="activity-item">
+            <span class="user">${escapeHtml(activity.userName || 'Unknown')}</span>
+            <span class="action">${escapeHtml(activity.action || '')}</span>
+            <span class="time">${timeStr}</span>
+          </div>
+        `;
+      });
+      adminActivityList.innerHTML = html;
     }
 
     // ============================================================
     //  UTILITY
     // ============================================================
-    function formatTime(seconds) {
-      if (!seconds || isNaN(seconds)) return '0:00';
-      const m = Math.floor(seconds / 60);
-      const s = Math.floor(seconds % 60);
-      return m + ':' + (s < 10 ? '0' : '') + s;
-    }
-
     function escapeHtml(text) {
       if (!text) return '';
       const div = document.createElement('div');
@@ -2434,29 +2305,9 @@
       return div.innerHTML;
     }
 
-    // Volume
-    $('volumeBtn').addEventListener('click', () => {
-      if (!audio.src) return;
-      if (audio.volume > 0.5) audio.volume = 0.2;
-      else if (audio.volume > 0) audio.volume = 0.5;
-      else audio.volume = 0.8;
-      const icon = audio.volume === 0 ? 'volume-mute' : audio.volume < 0.5 ? 'volume-down' : 'volume-up';
-      $('volumeBtn').innerHTML = `<i class="fas fa-${icon}"></i>`;
-      setTimeout(() => { $('volumeBtn').innerHTML = '<i class="fas fa-volume-up"></i>'; }, 800);
-    });
-
-    $('queueBtn').addEventListener('click', () => {
-      if (allSongs.length === 0) return alert('Tidak ada lagu.');
-      let msg = '📋 ANTRIAN LAGU:\n\n';
-      allSongs.forEach((s, i) => {
-        msg += `${i+1}. ${s.title} - ${s.artist}${i === currentSongIndex ? ' ▶' : ''}\n`;
-      });
-      alert(msg);
-    });
-
-    console.log('🎵 RYEDZ Music Player dengan Splash Foto/Video & Upload MP3');
-    console.log('ℹ️  Admin dapat mengatur splash screen di panel Admin.');
+    console.log('💀 JAILBREAK AI Prompt Social');
+    console.log('🔥 Upload prompt, rating, tier system, admin panel');
   </script>
 
 </body>
-        </html>
+  </html>
